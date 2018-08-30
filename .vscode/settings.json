@@ -1,0 +1,27 @@
+{
+	"php.validate.enable": false,
+	"workbench.startupEditor": "newUntitledFile",
+	"workbench.colorTheme": "One Dark Pro",
+	"workbench.iconTheme": "material-icon-theme",
+	"window.zoomLevel": 0,
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.minimap.enabled": false,
+	"editor.wordWrap": "on",
+	"editor.fontSize": 17,
+	"editor.fontFamily": "'D2Coding', Consolas",
+	"editor.formatOnSave": true,
+	"javascript.suggestionActions.enabled": false,
+	"javascript.format.enable": false,
+	"typescript.validate.enable": false,
+	"prettier.eslintIntegration": true,
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"node_modules/": true,
+		"src.*/": true
+	}
+}
