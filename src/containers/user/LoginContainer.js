@@ -9,14 +9,11 @@ import LoginForm from 'components/user/LoginForm'
 class LoginContainer extends Component {
 	onSubmit = async values => {
 		try {
-			// const {
-			// 	data: { token: token },
-			// } = await login(values)
-			// auth.setToken(token, true)
-			throw new Error('에러')
+			const {
+				data: { token: token },
+			} = await login(values)
+			auth.setToken(token, true)
 		} catch (e) {
-			// const { message } = e.response.data
-			// return { [FORM_ERROR]: message }
 			return { [FORM_ERROR]: e.message }
 		}
 	}

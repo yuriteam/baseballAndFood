@@ -6,7 +6,13 @@ const Header = () => {
 	const isLogged = auth.getToken() !== null
 	return (
 		<header>
-			{!isLogged && <NavLink to="/login">로그인</NavLink>}
+			{!isLogged && (
+				<React.Fragment>
+					<NavLink to="/login">로그인</NavLink>
+					<NavLink to="/signup">회원가입</NavLink>
+				</React.Fragment>
+			)}
+
 			{isLogged && <div>로그인 중</div>}
 		</header>
 	)

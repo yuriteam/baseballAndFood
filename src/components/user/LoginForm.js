@@ -3,6 +3,7 @@ import { Field } from 'react-final-form'
 import { Alert, Form, Button, InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faKey } from '@fortawesome/free-solid-svg-icons'
+import { NavLink } from 'react-router-dom'
 import styles from './LoginForm.scss'
 
 const LoginForm = props => {
@@ -37,6 +38,11 @@ const LoginForm = props => {
 			)}
 			<Button color="primary" block type="submit" disabled={submitting}>
 				로그인
+			</Button>
+			<Button color="success" block disabled={submitting}>
+				<NavLink to="/signup" style={{ display: 'block', height: '100%', color: 'white' }}>
+					회원가입
+				</NavLink>
 			</Button>
 		</Form>
 	)
