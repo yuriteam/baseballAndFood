@@ -43,9 +43,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 	isOwner = isOwner === 'Y'
 
 	const user = await User._create(email, password, name, phoneNumber, isOwner)
-	if (!user) {
-		throw new Error('회원가입에 실패했습니다.')
-	}
+	if (!user) throw new Error('회원가입에 실패했습니다.')
 
 	res.json({ message: '회원가입에 성공했습니다.' })
 })
