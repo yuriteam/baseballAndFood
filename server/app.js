@@ -12,7 +12,7 @@ const config = require('./config')
 
 // DB 연결
 mongoose.connect(
-	config.mongdbUri,
+	config.mongodbUri,
 	{
 		useNewUrlParser: true,
 	}
@@ -32,7 +32,7 @@ app.use(bodyParser.json())
 app.set('jwt-secret', config.secret)
 
 // 라우터
-app.use('/api', require('./routes/index'))
+app.use('/api', require('./routes'))
 
 // app.use(express.static(path.join(__dirname, 'public')));
 

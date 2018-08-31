@@ -19,10 +19,33 @@ exports.login = asyncHandler(async (req, res, next) => {
 	const returnUser = {
 		_id: user._id,
 		email: user.email,
+		name: user.name,
+		phoneNumber: user.phoneNumber,
+		isOwner: user.isOwner,
 		admin: user.admin,
 	}
 
 	const token = jwt.sign(returnUser, secret, { expiresIn: '7d' })
 
 	res.json({ token })
+})
+
+/**
+ * POST /api/auth/register
+ * @param {String} email
+ * @param {String} password
+ * @param {String} name
+ * @param {String} phoneNumber
+ * @param {Boolean} isOwner
+ */
+exports.register = asyncHandler(async (req, res, next) => {
+	let { email, password, name, phoneNumber, isOwner } = req.body
+	isOwner = isOwner === 'Y'
+
+	const user = await User._create(email, password, name, phoneNumber, isOwner)
+	if (!user) {
+		throw new Error('회원가입에 실패했습니다.')
+	}
+
+	res.json({ message: '회원가입에 성공했습니다.' })
 })
