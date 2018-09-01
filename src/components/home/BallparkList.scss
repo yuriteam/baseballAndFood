@@ -1,0 +1,5 @@
+.ballparkList::after {
+	display: block;
+	content: '';
+	clear: both;
+}
