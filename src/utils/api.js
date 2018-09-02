@@ -12,3 +12,5 @@ export const register = ({ email, password, name, phoneNumber, isOwner }) =>
 		isOwner,
 	})
 export const parkList = () => axios.get('/api/store/parkList')
+export const storeList = ({ park, name, cate, tag }) =>
+	axios.get('/api/store/search', { park, name, cate, tag })

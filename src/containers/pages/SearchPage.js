@@ -1,9 +1,10 @@
 import React from 'react'
 import PageTemplate from 'components/common/PageTemplate'
+import SearchContainer from 'containers/store/search/SearchContainer'
 
 const SearchPage = () => (
 	<PageTemplate>
-		<main className="container bg-light py-3">ddd</main>
+		<SearchContainer />
 	</PageTemplate>
 )
 

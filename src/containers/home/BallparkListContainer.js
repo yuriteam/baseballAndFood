@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import BallparkList from 'components/home/BallparkList'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as baseActions from 'reducers/base'
+import BallparkList from 'components/home/BallparkList'
 
 class BallparkListContainer extends Component {
 	async componentDidMount() {
@@ -11,14 +11,14 @@ class BallparkListContainer extends Component {
 	}
 
 	render() {
-		const { parks } = this.props
-		return <BallparkList parks={parks} />
+		const { parkList } = this.props
+		return <BallparkList parkList={parkList} />
 	}
 }
 
 export default connect(
-	state => ({
-		parks: state.base.parks,
+	({ base }) => ({
+		parkList: base.parkList,
 	}),
 	dispatch => bindActionCreators(baseActions, dispatch)
 )(BallparkListContainer)

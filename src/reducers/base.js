@@ -11,7 +11,7 @@ export const getParkList = createAction(GET_PARKLIST, api.parkList)
 
 // STATE INITIALIZE
 const initialState = Record({
-	parks: [],
+	parkList: [],
 })()
 
 // REDUCER
@@ -21,7 +21,7 @@ export default handleActions(
 			type: GET_PARKLIST,
 			onSuccess: (state, action) => {
 				const { parks } = action.payload.data
-				return state.set('parks', parks)
+				return state.set('parkList', parks)
 			},
 		}),
 	},

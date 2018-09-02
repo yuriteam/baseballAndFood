@@ -52,11 +52,13 @@ const SignUpForm = props => {
 					Email
 				</Label>
 				<Col sm={10}>
-					<Field name="email">
-						{({ input }) => (
-							<Input {...input} type="email" placeholder="E-mail" id="email" />
-						)}
-					</Field>
+					<Field
+						name="email"
+						type="email"
+						component="input"
+						placeholder="이메일"
+						className="form-control"
+					/>
 				</Col>
 			</FormGroup>
 			<FormGroup row>
@@ -64,16 +66,13 @@ const SignUpForm = props => {
 					비밀번호
 				</Label>
 				<Col sm={10}>
-					<Field name="password">
-						{({ input }) => (
-							<Input
-								{...input}
-								type="password"
-								placeholder="비밀번호"
-								id="password"
-							/>
-						)}
-					</Field>
+					<Field
+						name="password"
+						type="password"
+						component="input"
+						placeholder="비밀번호"
+						className="form-control"
+					/>
 				</Col>
 			</FormGroup>
 			<FormGroup row>
@@ -81,16 +80,13 @@ const SignUpForm = props => {
 					비밀번호 확인
 				</Label>
 				<Col sm={10}>
-					<Field name="password_confirm">
-						{({ input }) => (
-							<Input
-								{...input}
-								type="password"
-								placeholder="비밀번호 확인"
-								id="password_confirm"
-							/>
-						)}
-					</Field>
+					<Field
+						name="password_confirm"
+						type="password"
+						component="input"
+						placeholder="비밀번호 확인"
+						className="form-control"
+					/>
 				</Col>
 			</FormGroup>
 			<FormGroup row>
@@ -98,11 +94,12 @@ const SignUpForm = props => {
 					이름
 				</Label>
 				<Col sm={10}>
-					<Field name="user_name">
-						{({ input }) => (
-							<Input {...input} type="text" placeholder="이름" id="user_name" />
-						)}
-					</Field>
+					<Field
+						name="user_name"
+						component="input"
+						placeholder="이름"
+						className="form-control"
+					/>
 				</Col>
 			</FormGroup>
 			<FormGroup row>
@@ -110,11 +107,12 @@ const SignUpForm = props => {
 					전화번호
 				</Label>
 				<Col sm={10}>
-					<Field name="phoneNumber">
-						{({ input }) => (
-							<Input {...input} type="text" placeholder="전화번호	" id="phoneNumber" />
-						)}
-					</Field>
+					<Field
+						name="phoneNumber"
+						component="input"
+						placeholder="전화번호"
+						className="form-control"
+					/>
 				</Col>
 			</FormGroup>
 			{submitError && (

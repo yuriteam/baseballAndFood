@@ -16,9 +16,13 @@ const LoginForm = props => {
 						<FontAwesomeIcon icon={faUser} />
 					</InputGroupText>
 				</InputGroupAddon>
-				<Field name="email">
-					{({ input }) => <Input {...input} type="email" placeholder="이메일" />}
-				</Field>
+				<Field
+					name="email"
+					type="email"
+					component="input"
+					placeholder="이메일"
+					className="form-control"
+				/>
 			</InputGroup>
 			<InputGroup className="mb-2">
 				<InputGroupAddon addonType="prepend">
@@ -26,9 +30,13 @@ const LoginForm = props => {
 						<FontAwesomeIcon icon={faKey} />
 					</InputGroupText>
 				</InputGroupAddon>
-				<Field name="password">
-					{({ input }) => <Input {...input} type="password" placeholder="비밀번호" />}
-				</Field>
+				<Field
+					name="password"
+					type="password"
+					component="input"
+					placeholder="비밀번호"
+					className="form-control"
+				/>
 			</InputGroup>
 			{submitError && (
 				<Alert color="danger" className="small my-2">
