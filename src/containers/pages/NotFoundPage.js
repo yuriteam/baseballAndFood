@@ -4,9 +4,11 @@ import PageTemplate from 'components/common/PageTemplate'
 
 const NotFoundPage = () => (
 	<PageTemplate>
-		<Alert color="danger" fade={false}>
-			페이지가 없습니다.
-		</Alert>
+		<main className="container py-3">
+			<Alert color="danger" fade={false}>
+				페이지가 없습니다.
+			</Alert>
+		</main>
 	</PageTemplate>
 )
 

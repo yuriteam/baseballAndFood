@@ -1,10 +1,12 @@
 import React from 'react'
 import PageTemplate from 'components/common/PageTemplate'
-import Home from 'components/home/Home'
+import BallparkListContainer from 'containers/home/BallparkListContainer'
 
 const HomePage = () => (
 	<PageTemplate>
-		<Home />
+		<main className="container py-3">
+			<BallparkListContainer />
+		</main>
 	</PageTemplate>
 )
 

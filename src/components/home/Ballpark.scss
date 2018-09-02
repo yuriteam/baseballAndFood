@@ -1,31 +1,6 @@
-.ballparkCard {
-	width: 33.33%;
-	float: left;
-	height: 220px;
-	padding: 0 5px;
-	box-sizing: border-box;
-	margin-bottom: 20px;
+.link {
+	text-decoration: none !important;
 }
-
-.ballparkLink {
-	border: 1px solid #d9d9d9;
-	margin: 5px 0;
-	display: block;
-	height: 100%;
-}
-.ballparkName {
-	text-align: center;
-	margin-top: 15px;
-	color: #333;
-	font-size: 120%;
-	font-weight: bold;
-}
-.ballparkLocation {
-	color: #999;
-	text-align: right;
-	margin-right: 10px;
-}
-.ballparkImg {
-	display: block;
-	margin: 0 auto;
+.cardTitle {
+	color: initial;
 }

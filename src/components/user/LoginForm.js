@@ -1,16 +1,15 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Field } from 'react-final-form'
 import { Alert, Form, Button, InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faKey } from '@fortawesome/free-solid-svg-icons'
-import { NavLink } from 'react-router-dom'
-import styles from './LoginForm.scss'
 
 const LoginForm = props => {
 	const { handleSubmit, submitting, submitError } = props
 	return (
-		<Form className={['mx-auto mt-3', styles.form].join(' ')} onSubmit={handleSubmit}>
-			<h6 className="font-weight-bold mb-3">로그인</h6>
+		<Form onSubmit={handleSubmit}>
+			<h5 className="font-weight-bold mb-3">로그인</h5>
 			<InputGroup className="mb-2">
 				<InputGroupAddon addonType="prepend">
 					<InputGroupText>
@@ -39,11 +38,9 @@ const LoginForm = props => {
 			<Button color="primary" block type="submit" disabled={submitting}>
 				로그인
 			</Button>
-			<Button color="success" block disabled={submitting}>
-				<NavLink to="/signup" style={{ display: 'block', height: '100%', color: 'white' }}>
-					회원가입
-				</NavLink>
-			</Button>
+			<Link className="btn btn-secondary btn-block" to="/signup">
+				회원가입
+			</Link>
 		</Form>
 	)
 }

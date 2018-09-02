@@ -11,3 +11,4 @@ export const register = ({ email, password, name, phoneNumber, isOwner }) =>
 		phoneNumber,
 		isOwner,
 	})
+export const parkList = () => axios.get('/api/store/parkList')

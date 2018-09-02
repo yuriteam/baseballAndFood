@@ -9,7 +9,6 @@ import penderMiddleware from 'redux-pender'
 import rootReducer from './reducers'
 import Root from './Root'
 import registerServiceWorker from './registerServiceWorker'
-import 'styles/base.scss'
 
 const history = createBrowserHistory()
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

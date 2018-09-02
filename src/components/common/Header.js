@@ -1,31 +1,37 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { Component, Fragment } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import { Button } from 'reactstrap'
 import auth from 'utils/auth'
-import { Redirect } from 'react-router-dom'
 
-const Header = () => {
-	const isLogged = auth.getToken() !== null
-
-	const renderButton = () => {
-		if (!isLogged) {
-			return (
-				<div style={{ float: 'right' }}>
-					<NavLink to="/login">로그인</NavLink>
-					<NavLink to="/signup">회원가입</NavLink>
-				</div>
-			)
-		}
+class Header extends Component {
+	logout = () => {
+		auth.clearAppStorage()
+		this.props.history.push('/login')
+	}
+	render() {
+		const isLogged = auth.getToken() !== null
 		return (
-			<div style={{ float: 'right' }}>
-				<span>로그인 중</span>
-				<NavLink to="/" onClick={auth.clearAppStorage}>
-					로그아웃
-				</NavLink>
-			</div>
+			<nav className="navbar navbar-dark bg-primary static-top">
+				<div className="container">
+					<Link className="navbar-brand font-weight-bold" to="/">
+						Baseball & Food
+					</Link>
+					{!isLogged && (
+						<Link className="btn btn-primary" to="/login">
+							로그인
+						</Link>
+					)}
+					{isLogged && (
+						<Fragment>
+							<Button color="primary" onClick={this.logout}>
+								로그아웃
+							</Button>
+						</Fragment>
+					)}
+				</div>
+			</nav>
 		)
 	}
-
-	return <header style={{ height: 50 }}>{renderButton()}</header>
 }
 
-export default Header
+export default withRouter(Header)

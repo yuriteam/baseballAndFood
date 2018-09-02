@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Field } from 'react-final-form'
 import {
 	Alert,
@@ -11,27 +12,14 @@ import {
 	Col,
 	Label,
 } from 'reactstrap'
-import styles from './SignUpForm.scss'
 
 const SignUpForm = props => {
 	const { handleSubmit, submitting, submitError } = props
 	return (
-		<Form className={['mx-auto mt-3', styles.form].join(' ')} onSubmit={handleSubmit}>
-			<h6 className="font-weight-bold mb-3">회원가입</h6>
+		<Form onSubmit={handleSubmit}>
+			<h5 className="font-weight-bold mb-3">회원가입</h5>
 			<FormGroup row>
 				<Col sm={10}>
-					<Field name="isOwner" type="radio" value="Y">
-						{({ input }) => (
-							<CustomInput
-								{...input}
-								value="Y"
-								type="radio"
-								label="사장님"
-								id="isOwner_Y"
-								inline
-							/>
-						)}
-					</Field>
 					<Field name="isOwner" type="radio" value="N">
 						{({ input }) => (
 							<CustomInput
@@ -40,6 +28,19 @@ const SignUpForm = props => {
 								type="radio"
 								label="일반 회원"
 								id="isOwner_N"
+								inline
+								checked
+							/>
+						)}
+					</Field>
+					<Field name="isOwner" type="radio" value="Y">
+						{({ input }) => (
+							<CustomInput
+								{...input}
+								value="Y"
+								type="radio"
+								label="사장님"
+								id="isOwner_Y"
 								inline
 							/>
 						)}
@@ -121,25 +122,13 @@ const SignUpForm = props => {
 					{submitError}
 				</Alert>
 			)}
-			<ButtonGroup style={{ textAlign: 'center', display: 'block' }}>
-				<Button
-					color="primary"
-					type="reset"
-					disabled={submitting}
-					size="lg"
-					style={{ width: 150 }}
-				>
-					취소
-				</Button>
-				<Button
-					color="success"
-					type="submit"
-					disabled={submitting}
-					size="lg"
-					style={{ width: 150 }}
-				>
+			<ButtonGroup className="d-block text-center">
+				<Button color="primary" type="submit" disabled={submitting} style={{ width: 150 }}>
 					회원가입
 				</Button>
+				<Link className="btn btn-secondary" style={{ width: 150 }} to="/">
+					취소
+				</Link>
 			</ButtonGroup>
 		</Form>
 	)

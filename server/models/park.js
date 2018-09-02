@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const ParkSchema = new Schema({
 	name: String,
+	homeTeam: [String],
 	location: {
 		name: String,
 		loc: {
@@ -16,9 +17,10 @@ const ParkSchema = new Schema({
  * static, method
  */
 // 야구장 등록
-ParkSchema.statics._create = function(name, location) {
+ParkSchema.statics._create = function(name, homeTeam, location) {
 	const park = new this({
 		name,
+		homeTeam,
 		location,
 	})
 	return park.save()
