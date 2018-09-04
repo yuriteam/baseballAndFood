@@ -34,15 +34,9 @@ class SearchDetailContainer extends Component {
 	}
 
 	async componentDidMount() {
-		const { match, parkList, cateList, getParkList, getCateList, getStoreDetail } = this.props
+		const { match, getStoreDetail } = this.props
 
 		try {
-			if (!parkList || parkList.length == 0) {
-				await getParkList()
-			}
-			if (!cateList || cateList.length == 0) {
-				await getCateList()
-			}
 			await getStoreDetail(match.params)
 		} catch (e) {
 			console.log(e)
@@ -78,11 +72,7 @@ class SearchDetailContainer extends Component {
 							initialValues={{ store: store._id }}
 							// values={query}
 							render={props => (
-								<ReviewForm
-									{...props}
-									reviewModal={reviewModal}
-									toggle={toggleModal}
-								/>
+								<ReviewForm {...props} isOpen={reviewModal} toggle={toggleModal} />
 							)}
 						/>
 					)}
@@ -93,9 +83,9 @@ class SearchDetailContainer extends Component {
 }
 
 export default connect(
-	({ store }) => ({
-		parkList: store.parkList,
-		cateList: store.cateList,
+	({ base, store }) => ({
+		parkList: base.parkList,
+		cateList: base.cateList,
 		storeDetail: store.storeDetail,
 	}),
 	dispatch => bindActionCreators(storeActions, dispatch)

@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash'
 
 const TOKEN_KEY = 'jwtToken'
+const USERINFO_KEY = 'userInfo'
 const parse = JSON.parse
 const stringify = JSON.stringify
 
@@ -41,6 +42,9 @@ const auth = {
 	clearToken(tokenKey = TOKEN_KEY) {
 		return auth.clear(tokenKey)
 	},
+	clearUserInfo(tokenKey = USERINFO_KEY) {
+		return auth.clear(tokenKey)
+	},
 
 	/**
 	 * Returns data from storage
@@ -57,6 +61,9 @@ const auth = {
 		return null
 	},
 	getToken(tokenKey = TOKEN_KEY) {
+		return auth.get(tokenKey)
+	},
+	getUserInfo(tokenKey = USERINFO_KEY) {
 		return auth.get(tokenKey)
 	},
 
@@ -79,6 +86,9 @@ const auth = {
 		return null
 	},
 	setToken(value = '', isLocalStorage = false, tokenKey = TOKEN_KEY) {
+		return auth.set(value, tokenKey, isLocalStorage)
+	},
+	setUserInfo(value = '', isLocalStorage = false, tokenKey = USERINFO_KEY) {
 		return auth.set(value, tokenKey, isLocalStorage)
 	},
 }

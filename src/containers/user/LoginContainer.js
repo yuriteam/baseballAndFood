@@ -10,9 +10,10 @@ class LoginContainer extends Component {
 	onSubmit = async values => {
 		try {
 			const {
-				data: { token: token },
+				data: { token: token, user: user },
 			} = await login(values)
 			auth.setToken(token, true)
+			auth.setUserInfo(user, true)
 		} catch (e) {
 			return { [FORM_ERROR]: e.message }
 		}

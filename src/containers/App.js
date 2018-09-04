@@ -20,8 +20,7 @@ const App = () => (
 		<Route path="/signup" component={SignUpPage} />
 		<Route path="/search" component={SearchPage} />
 		<Route exact path="/store/:storeId" component={DetailPage} />
-		<Route path="/owner" component={OwnerPage} />
-		<PrivateRoute path="/protected" component={() => <h3>protected test</h3>} />
+		<PrivateRoute path="/owner" component={OwnerPage} />
 		<Route component={NotFoundPage} />
 	</Switch>
 )

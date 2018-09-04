@@ -49,7 +49,7 @@ StoreSchema.statics._create = function(
 // 상점 조건(park, name, cate)으로 찾기
 StoreSchema.statics._findByOptions = function(options) {
 	return this.find(options)
-		.populate('user')
+		.populate('owner')
 		.populate({ path: 'park', select: 'name' })
 		.populate('category')
 		.exec()
@@ -58,15 +58,19 @@ StoreSchema.statics._findByOptions = function(options) {
 // 상점 인덱스로 상점 찾기
 StoreSchema.statics._findByStoreId = function(_id) {
 	return this.findById(_id)
-		.populate('user')
+		.populate('owner')
 		.populate({ path: 'park', select: 'name' })
 		.populate('category')
 		.exec()
 }
 
 // 유저 인덱스로 상점들 찾기
-StoreSchema.statics._findByUserId = function(user) {
-	return this.find({ user }).exec()
+StoreSchema.statics._findByUserId = function(owner) {
+	return this.find({ owner })
+		.populate('owner')
+		.populate({ path: 'park', select: 'name' })
+		.populate('category')
+		.exec()
 }
 
 /**

@@ -20,16 +20,10 @@ class SearchContainer extends Component {
 	}
 
 	async componentDidMount() {
-		const { location, parkList, cateList, getParkList, getCateList, getStoreList } = this.props
+		const { location, getStoreList } = this.props
 		const query = queryString.parse(location.search)
 
 		try {
-			if (!parkList || parkList.length == 0) {
-				await getParkList()
-			}
-			if (!cateList || cateList.length == 0) {
-				await getCateList()
-			}
 			await getStoreList(query)
 		} catch (e) {
 			console.log(e)
@@ -62,9 +56,9 @@ class SearchContainer extends Component {
 }
 
 export default connect(
-	({ store }) => ({
-		parkList: store.parkList,
-		cateList: store.cateList,
+	({ base, store }) => ({
+		parkList: base.parkList,
+		cateList: base.cateList,
 		storeList: store.storeList,
 	}),
 	dispatch => bindActionCreators(storeActions, dispatch)

@@ -15,11 +15,11 @@ import {
 import auth from 'utils/auth'
 
 const ReviewForm = props => {
-	const { reviewModal, toggle, handleSubmit, submitting, submitError } = props
+	const { isOpen, toggle, handleSubmit, submitting, submitError } = props
 	return (
 		<Fragment>
 			{auth.getToken() !== null && (
-				<Modal isOpen={reviewModal} toggle={toggle}>
+				<Modal isOpen={isOpen} toggle={toggle}>
 					<Form onSubmit={handleSubmit}>
 						<ModalHeader toggle={toggle}>리뷰 등록</ModalHeader>
 						<ModalBody>

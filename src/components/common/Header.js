@@ -10,6 +10,7 @@ class Header extends Component {
 	}
 	render() {
 		const isLogged = auth.getToken() !== null
+		const isOwner = isLogged && auth.getUserInfo().isOwner
 		return (
 			<nav className="navbar navbar-dark bg-primary static-top">
 				<div className="container">
@@ -23,9 +24,11 @@ class Header extends Component {
 					)}
 					{isLogged && (
 						<div>
-							<Link className="btn btn-primary" to="/owner">
-								사장님
-							</Link>
+							{isOwner && (
+								<Link className="btn btn-primary" to="/owner">
+									사장님
+								</Link>
+							)}
 							<Button color="primary" onClick={this.logout}>
 								로그아웃
 							</Button>
