@@ -10,9 +10,9 @@ import SearchResultList from 'components/store/search/SearchResultList'
 
 class SearchContainer extends Component {
 	onSubmit = async values => {
-		console.log(values)
-		const { getStoreList } = this.props
+		const { history, getStoreList } = this.props
 		try {
+			history.push('/search/?' + queryString.stringify(values))
 			await getStoreList(values)
 		} catch (e) {
 			console.log(e)
@@ -20,24 +20,29 @@ class SearchContainer extends Component {
 	}
 
 	async componentDidMount() {
-		const { location, getParkList, getStoreList } = this.props
+		const { location, parkList, cateList, getParkList, getCateList, getStoreList } = this.props
 		const query = queryString.parse(location.search)
 
 		try {
-			await getParkList()
+			if (!parkList || parkList.length == 0) {
+				await getParkList()
+			}
+			if (!cateList || cateList.length == 0) {
+				await getCateList()
+			}
 			await getStoreList(query)
 		} catch (e) {
 			console.log(e)
 		}
 	}
 
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	return nextProps.users !== this.props.users;
-	//   }
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextProps.storeList !== this.props.storeList
+	}
 
 	render() {
 		const { onSubmit } = this
-		const { location, parkList } = this.props
+		const { location, parkList, cateList, storeList } = this.props
 		const query = queryString.parse(location.search)
 
 		return (
@@ -45,9 +50,12 @@ class SearchContainer extends Component {
 				<Form
 					onSubmit={onSubmit}
 					initialValues={query}
-					render={props => <SearchForm {...props} parkList={parkList} />}
+					values={query}
+					render={props => (
+						<SearchForm {...props} parkList={parkList} cateList={cateList} />
+					)}
 				/>
-				<SearchResultList />
+				<SearchResultList storeList={storeList} />
 			</Fragment>
 		)
 	}
@@ -56,6 +64,7 @@ class SearchContainer extends Component {
 export default connect(
 	({ store }) => ({
 		parkList: store.parkList,
+		cateList: store.cateList,
 		storeList: store.storeList,
 	}),
 	dispatch => bindActionCreators(storeActions, dispatch)

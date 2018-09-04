@@ -1,4 +1,5 @@
 import axios from 'axios'
+import queryString from 'query-string'
 import auth from 'utils/auth'
 axios.defaults.headers.common['Authorization'] = auth.authHeader()
 
@@ -12,5 +13,8 @@ export const register = ({ email, password, name, phoneNumber, isOwner }) =>
 		isOwner,
 	})
 export const parkList = () => axios.get('/api/store/parkList')
-export const storeList = ({ park, name, cate, tag }) =>
-	axios.get('/api/store/search', { park, name, cate, tag })
+export const cateList = () => axios.get('/api/store/cateList')
+export const storeList = values => axios.get('/api/store/search?' + queryString.stringify(values))
+export const storeDetail = ({ storeId }) => axios.get('/api/store/' + storeId)
+export const insertReview = ({ store, content, score }) =>
+	axios.post('/api/store/review', { store, content, score })

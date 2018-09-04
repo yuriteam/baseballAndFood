@@ -10,6 +10,9 @@ const createError = require('http-errors')
 // config
 const config = require('./config')
 
+// router
+const routes = require('./routes')
+
 // DB 연결
 mongoose.connect(
 	config.mongodbUri,
@@ -17,6 +20,13 @@ mongoose.connect(
 		useNewUrlParser: true,
 	}
 )
+require('./models/user')
+require('./models/cate')
+require('./models/menu')
+require('./models/park')
+require('./models/store')
+require('./models/review')
+require('./models/order')
 
 // 앱 설정
 const app = express()
@@ -32,7 +42,7 @@ app.use(bodyParser.json())
 app.set('jwt-secret', config.secret)
 
 // 라우터
-app.use('/api', require('./routes'))
+app.use('/api', routes)
 
 // app.use(express.static(path.join(__dirname, 'public')));
 

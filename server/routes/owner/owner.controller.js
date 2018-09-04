@@ -18,23 +18,13 @@ exports.storeList = asyncHandler(async (req, res, next) => {
  * @param {String} category
  * @param {String} location
  * @param {String} phoneNumber
- * @param {[String]} tags
  * @param {Boolean} orderable
  */
 exports.addStore = asyncHandler(async (req, res, next) => {
-	const { name, park, category, location, phoneNumber, tags, orderable } = req.body
+	const { name, park, category, location, phoneNumber, orderable } = req.body
 	const owner = req.user._id
 
-	const store = await Store._create(
-		name,
-		owner,
-		park,
-		category,
-		location,
-		phoneNumber,
-		tags,
-		orderable
-	)
+	const store = await Store._create(name, owner, park, category, location, phoneNumber, orderable)
 	if (!store) throw new Error('상점 등록에 실패했습니다.')
 
 	res.json({ message: '상점 등록에 성공했습니다.' })

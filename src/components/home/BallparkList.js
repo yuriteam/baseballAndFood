@@ -5,7 +5,7 @@ import BallPark from './Ballpark'
 const BallparkList = ({ parkList }) => (
 	<Row>
 		{parkList.map((park, i) => (
-			<BallPark key={'ballpark' + i} park={park} />
+			<BallPark key={'ballpark_' + park._id} park={park} />
 		))}
 	</Row>
 )

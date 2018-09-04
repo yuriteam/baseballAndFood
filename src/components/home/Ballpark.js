@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Col, Card, CardText, CardTitle, CardSubtitle } from 'reactstrap'
 import styles from './Ballpark.scss'
 
-class BallparkList extends Component {
+class Ballpark extends Component {
 	renderHomeTeam = () => {
 		const { park } = this.props
 		return park.homeTeam.map((team, i) => {
@@ -40,4 +40,4 @@ class BallparkList extends Component {
 	}
 }
 
-export default BallparkList
+export default Ballpark

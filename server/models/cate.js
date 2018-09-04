@@ -16,6 +16,13 @@ CateSchema.statics._create = function(name) {
 	return cate.save()
 }
 
+// 야구장 리스트
+CateSchema.statics._list = function() {
+	return this.find({})
+		.sort({ _id: 1 })
+		.exec()
+}
+
 /**
  * 스키마 등록
  */

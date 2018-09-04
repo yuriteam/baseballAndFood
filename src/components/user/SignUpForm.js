@@ -29,7 +29,6 @@ const SignUpForm = props => {
 								label="일반 회원"
 								id="isOwner_N"
 								inline
-								checked
 							/>
 						)}
 					</Field>
@@ -90,12 +89,12 @@ const SignUpForm = props => {
 				</Col>
 			</FormGroup>
 			<FormGroup row>
-				<Label for="user_name" sm={2}>
+				<Label for="name" sm={2}>
 					이름
 				</Label>
 				<Col sm={10}>
 					<Field
-						name="user_name"
+						name="name"
 						component="input"
 						placeholder="이름"
 						className="form-control"
