@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-const Store = require('../../models/user')
+const Store = require('../../models/store')
 const Menu = require('../../models/menu')
 const Order = require('../../models/order')
 
@@ -21,13 +21,24 @@ exports.storeList = asyncHandler(async (req, res, next) => {
  * @param {Boolean} orderable
  */
 exports.addStore = asyncHandler(async (req, res, next) => {
-	const { name, park, category, location, phoneNumber, orderable } = req.body
+	let { name, park, category, location, phoneNumber, orderable } = req.body
 	const owner = req.user._id
+	orderable = orderable === 'Y'
 
-	const store = await Store._create(name, owner, park, category, location, phoneNumber, orderable)
+	// location 임시
+	location = {
+		name: location,
+		loc: {
+			type: 'Point',
+			coordinates: [0, 0],
+		},
+	}
+
+	let store = await Store._create(name, owner, park, category, location, phoneNumber, orderable)
 	if (!store) throw new Error('상점 등록에 실패했습니다.')
 
-	res.json({ message: '상점 등록에 성공했습니다.' })
+	store = await Store._findByStoreId(store._id)
+	res.json({ store })
 })
 
 /**

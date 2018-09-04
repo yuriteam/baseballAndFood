@@ -1,73 +1,43 @@
 import { createAction, handleActions } from 'redux-actions'
-import { Record } from 'immutable'
+import { Record, List } from 'immutable'
 import { pender } from 'redux-pender'
 import * as api from 'utils/api'
 
 // ACTIONS
 const GET_STORELIST = 'owner/GET_STORELIST'
+const TOGGLE_ADD_STORE_MODAL = 'owner/TOGGLE_ADD_STORE_MODAL'
 const ADD_STORE = 'owner/ADD_STORE'
-const TOGGLE_MODAL = 'owner/TOGGLE_MODAL'
-const GET_PARKLIST = 'owner/GET_PARKLIST'
+
 // ACTION CREATORS
-//export const getStoreList = createAction(GET_STORELIST, api.storeList)
-//export const addStore = createAction(ADD_STORE, api.addStore)
-export const addStore = createAction(ADD_STORE, value => value)
-export const toggleModal = createAction(TOGGLE_MODAL)
-export const getParkList = createAction(GET_PARKLIST, api.parkList)
+export const getStoreList = createAction(GET_STORELIST, api.ownerStoreList)
+export const toggleAddStoreModal = createAction(TOGGLE_ADD_STORE_MODAL)
+export const addStore = createAction(ADD_STORE, api.addStore)
+
 // STATE INITIALIZE
 const initialState = Record({
-	storeList: [
-		{
-			key: '0',
-			storeName: '잠실스타벅스',
-			menus: [],
-			ballpark: '잠실야구장',
-			imgUri:
-				'http://blogfiles.naver.net/20140205_176/gamnamuzip_13915710096842bPrP_JPEG/37.jpg',
-		},
-		{
-			key: '1',
-			storeName: '수원스타벅스',
-			menus: [],
-			ballpark: '수원 kt 위즈파크',
-			imgUri:
-				'http://blogfiles.naver.net/20140205_176/gamnamuzip_13915710096842bPrP_JPEG/37.jpg',
-		},
-	],
-	modal: false,
-	parkList: [],
+	storeList: List(),
+	addStoreModal: false,
 })()
 
 // REDUCER
 export default handleActions(
 	{
 		...pender({
-			type: GET_PARKLIST,
+			type: GET_STORELIST,
 			onSuccess: (state, { payload: { data: data } }) => {
-				const { parks } = data
-				console.log(data)
-				return state.set('parkList', parks)
+				const { stores } = data
+				return state.set('storeList', List(stores))
 			},
 		}),
-		[TOGGLE_MODAL]: (state, action) => {
-			return state.set('modal', !state.modal)
-		},
-		[ADD_STORE]: (state, { payload: value }) => {
-			let parkName
-			state.parkList.forEach(ballpark => {
-				if (ballpark._id == value.park) parkName = ballpark.name
-			})
-			let newStore = {
-				key: state.parkList.length - 1,
-				storeName: value.storeName,
-				ballpark: parkName,
-				imgUri:
-					'http://blogfiles.naver.net/20140205_176/gamnamuzip_13915710096842bPrP_JPEG/37.jpg',
-			}
-			var newList = Object.assign([], state.storeList)
-			newList.push(newStore)
-			return state.set('storeList', newList)
-		},
+		[TOGGLE_ADD_STORE_MODAL]: (state, action) =>
+			state.set('addStoreModal', !state.addStoreModal),
+		...pender({
+			type: ADD_STORE,
+			onSuccess: (state, { payload: { data: data } }) => {
+				const { store } = data
+				return state.update('storeList', storeList => storeList.push(store))
+			},
+		}),
 	},
 	initialState
 )

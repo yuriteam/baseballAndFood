@@ -21,3 +21,5 @@ export const insertReview = ({ store, content, score }) =>
 	axios.post('/api/store/review', { store, content, score })
 
 export const ownerStoreList = () => axios.get('/api/owner/storeList')
+export const addStore = ({ name, park, category, location, phoneNumber, orderable }) =>
+	axios.post('/api/owner/addStore', { name, park, category, location, phoneNumber, orderable })

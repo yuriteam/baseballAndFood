@@ -1,39 +1,55 @@
 import React, { Component, Fragment } from 'react'
-import OwnerStoreList from 'components/owner/OwnerStoreList'
-import AddStoreModal from 'components/owner/AddStoreModal'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
 import * as ownerActions from 'reducers/owner'
 import { Form } from 'react-final-form'
+import { FORM_ERROR } from 'final-form'
+import OwnerStoreList from 'components/owner/OwnerStoreList'
+import AddStoreButton from 'components/owner/AddStoreButton'
+import AddStoreModal from 'components/owner/AddStoreModal'
 
 class OwnerContainer extends Component {
-	async componentDidMount() {
-		const { getParkList } = this.props
+	onAddStoreSubmit = async values => {
+		const { addStore, toggleAddStoreModal } = this.props
 		try {
-			await getParkList()
+			await addStore(values)
+			toggleAddStoreModal()
+		} catch (e) {
+			return { [FORM_ERROR]: e.message }
+		}
+	}
+
+	toggleAddStoreModal = () => {
+		const { toggleAddStoreModal } = this.props
+		toggleAddStoreModal()
+	}
+
+	async componentDidMount() {
+		const { getStoreList } = this.props
+
+		try {
+			await getStoreList()
 		} catch (e) {
 			console.log(e)
 		}
 	}
-	addStore = values => {
-		this.props.addStore(values)
-	}
+
 	render() {
+		const { onAddStoreSubmit, toggleAddStoreModal } = this
+		const { parkList, cateList, storeList, addStoreModal } = this.props
 		return (
 			<Fragment>
-				<OwnerStoreList
-					storeList={this.props.storeList}
-					toggleModal={this.props.toggleModal}
-				/>
+				<AddStoreButton toggle={toggleAddStoreModal} />
+				<OwnerStoreList storeList={storeList} />
 				<Form
-					onSubmit={this.addStore}
+					onSubmit={onAddStoreSubmit}
 					render={props => (
 						<AddStoreModal
 							{...props}
-							modal={this.props.modal}
-							toggleModal={this.props.toggleModal}
-							parkList={this.props.parkList}
+							isOpen={addStoreModal}
+							toggle={toggleAddStoreModal}
+							parkList={parkList}
+							cateList={cateList}
 						/>
 					)}
 				/>
@@ -43,10 +59,11 @@ class OwnerContainer extends Component {
 }
 
 export default connect(
-	({ owner }) => ({
-		modal: owner.modal,
+	({ base, owner }) => ({
+		parkList: base.parkList,
+		cateList: base.cateList,
 		storeList: owner.storeList,
-		parkList: owner.parkList,
+		addStoreModal: owner.addStoreModal,
 	}),
 	dispatch => bindActionCreators(ownerActions, dispatch)
-)(withRouter(OwnerContainer))
+)(OwnerContainer)
