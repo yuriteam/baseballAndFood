@@ -48,7 +48,8 @@ exports.addStore = asyncHandler(async (req, res, next) => {
  * @param {String} price
  */
 exports.addMenu = asyncHandler(async (req, res, next) => {
-	const { store, name, price } = req.body
+	let { store, name, price } = req.body
+	price = Number(price)
 
 	const menu = await Menu._create(store, name, price)
 	if (!menu) throw new Error('메뉴 등록에 실패했습니다.')

@@ -8,6 +8,8 @@ import {
 	SignUpPage,
 	SearchPage,
 	DetailPage,
+	OrderPage,
+	MyOrderPage,
 	OwnerPage,
 	NotFoundPage,
 } from 'containers/pages'
@@ -20,6 +22,8 @@ const App = () => (
 		<Route path="/signup" component={SignUpPage} />
 		<Route path="/search" component={SearchPage} />
 		<Route exact path="/store/:storeId" component={DetailPage} />
+		<PrivateRoute exact path="/store/:storeId/order" component={OrderPage} />
+		<PrivateRoute path="/myorder" component={MyOrderPage} />
 		<PrivateRoute path="/owner" component={OwnerPage} />
 		<Route component={NotFoundPage} />
 	</Switch>

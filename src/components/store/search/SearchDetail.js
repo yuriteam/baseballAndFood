@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import { Card, CardHeader, CardFooter, CardBody, CardSubtitle, Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTag, faMapMarkerAlt, faPhoneSquare } from '@fortawesome/free-solid-svg-icons'
 import auth from 'utils/auth'
+import MenuList from './MenuList'
 import styles from './SearchDetail.scss'
 
-const SearchDetail = ({ store, toggle }) => (
+const SearchDetail = ({ store, menuList, toggle }) => (
 	<Fragment>
 		{/* 지도 */}
 		<Card>
@@ -37,14 +39,20 @@ const SearchDetail = ({ store, toggle }) => (
 					</li>
 				</ul>
 			</CardBody>
-			<CardBody>메뉴는 여기</CardBody>
-			{auth.getToken() !== null && (
-				<CardFooter className="text-right">
-					<Button color="primary" onClick={toggle}>
-						리뷰 등록
-					</Button>
-				</CardFooter>
-			)}
+			<CardBody>
+				<MenuList menuList={menuList} />
+			</CardBody>
+			{auth.getToken() !== null &&
+				!auth.getUserInfo().isOwner && (
+					<CardFooter className="d-flex justify-content-between">
+						<Link to={'/store/' + store._id + '/order'} className="btn btn-primary">
+							주문하기
+						</Link>
+						<Button color="primary" onClick={toggle}>
+							리뷰 등록
+						</Button>
+					</CardFooter>
+				)}
 		</Card>
 	</Fragment>
 )

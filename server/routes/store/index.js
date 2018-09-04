@@ -12,5 +12,6 @@ router.use(authMiddleWare)
 
 router.get('/:storeId/menuList', controller.menuList)
 router.post('/review', controller.review)
+router.post('/order', controller.order)
 
 module.exports = router

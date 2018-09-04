@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
 const User = require('../../models/user')
+const Order = require('../../models/order')
 
 /**
  * POST /api/auth/login
@@ -46,4 +47,13 @@ exports.register = asyncHandler(async (req, res, next) => {
 	if (!user) throw new Error('회원가입에 실패했습니다.')
 
 	res.json({ message: '회원가입에 성공했습니다.' })
+})
+
+/**
+ * GET /api/auth/order
+ */
+exports.order = asyncHandler(async (req, res, next) => {
+	const user = req.user._id
+	const orders = await Order._findByUserId(user)
+	res.json({ orders })
 })

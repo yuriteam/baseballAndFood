@@ -30,66 +30,23 @@ const ReviewForm = props => {
 							)}
 							<Field name="store" component="input" type="hidden" />
 							<FormGroup>
-								<Field name="score" type="radio" value="1">
-									{({ input }) => (
-										<CustomInput
-											{...input}
-											value="1"
-											type="radio"
-											label="1점"
-											id="score_1"
-											inline
-										/>
-									)}
-								</Field>
-								<Field name="score" type="radio" value="2">
-									{({ input }) => (
-										<CustomInput
-											{...input}
-											value="2"
-											type="radio"
-											label="2점"
-											id="score_2"
-											inline
-										/>
-									)}
-								</Field>
-								<Field name="score" type="radio" value="3">
-									{({ input }) => (
-										<CustomInput
-											{...input}
-											value="3"
-											type="radio"
-											label="3점"
-											id="score_3"
-											inline
-										/>
-									)}
-								</Field>
-								<Field name="score" type="radio" value="4">
-									{({ input }) => (
-										<CustomInput
-											{...input}
-											value="4"
-											type="radio"
-											label="4점"
-											id="score_4"
-											inline
-										/>
-									)}
-								</Field>
-								<Field name="score" type="radio" value="5">
-									{({ input }) => (
-										<CustomInput
-											{...input}
-											value="5"
-											type="radio"
-											label="5점"
-											id="score_5"
-											inline
-										/>
-									)}
-								</Field>
+								{_.times(5, i => {
+									i++
+									return (
+										<Field name="score" type="radio" value={i}>
+											{({ input }) => (
+												<CustomInput
+													{...input}
+													value={i}
+													type="radio"
+													label={i + '점'}
+													id={'score_' + i}
+													inline
+												/>
+											)}
+										</Field>
+									)
+								})}
 							</FormGroup>
 							<FormGroup>
 								<Label for="content">내용</Label>

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const OrderSchema = new Schema({
 	user: { type: Schema.Types.ObjectId, ref: 'user' },
 	store: { type: Schema.Types.ObjectId, ref: 'store' },
-	menu: [{ type: Schema.Types.ObjectId, ref: 'menu' }],
+	menus: [{ type: Schema.Types.ObjectId, ref: 'menu' }],
 	finish: { type: Boolean, default: false },
 })
 
@@ -12,18 +12,37 @@ const OrderSchema = new Schema({
  * static, method
  */
 // 주문 생성
-OrderSchema.statics._create = function(user, store, menu) {
+OrderSchema.statics._create = function(user, store, menus) {
 	const order = new this({
 		user,
 		store,
-		menu,
+		menus,
 	})
 	return order.save()
 }
 
 // 상점 인덱스로 주문들 가져오기
 OrderSchema.statics._findByStoreId = function(store) {
-	return this.find({ store }).exec()
+	return this.find({ store })
+		.populate('store')
+		.populate('menus')
+		.exec()
+}
+
+// 주문 인덱스로 주문 가져오기
+OrderSchema.statics._findByOrderId = function(_id) {
+	return this.findById(_id)
+		.populate('store')
+		.populate('menus')
+		.exec()
+}
+
+// 유저 인덱스로 주문들 가져오기
+OrderSchema.statics._findByUserId = function(user) {
+	return this.find({ user })
+		.populate('store')
+		.populate('menus')
+		.exec()
 }
 
 // 주문 인덱스로 주문 상태 변경

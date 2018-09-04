@@ -3,6 +3,7 @@ const Park = require('../../models/park')
 const Store = require('../../models/store')
 const Menu = require('../../models/menu')
 const Review = require('../../models/review')
+const Order = require('../../models/order')
 const Cate = require('../../models/cate')
 
 /**
@@ -52,8 +53,9 @@ exports.search = asyncHandler(async (req, res, next) => {
 exports.detail = asyncHandler(async (req, res, next) => {
 	const storeId = req.params.storeId
 	let store = await Store._findByStoreId(storeId)
+	let menus = await Menu._findByStoreId(storeId)
 	let reviews = await Review._findByStoreId(storeId)
-	res.json({ store, reviews })
+	res.json({ store, menus, reviews })
 })
 
 /**
@@ -82,4 +84,20 @@ exports.review = asyncHandler(async (req, res, next) => {
 
 	review = await Review._findByReviewId(review._id)
 	res.json({ review })
+})
+
+/**
+ * POST /api/store/order
+ * @param {String} store
+ * @param {[String]} menus
+ */
+exports.order = asyncHandler(async (req, res, next) => {
+	const user = req.user._id
+	let { store, menus } = req.body
+
+	let order = await Order._create(user, store, menus)
+	if (!order) throw new Error('주문을 실패했습니다.')
+
+	order = await Order._findByOrderId(order._id)
+	res.json({ order })
 })

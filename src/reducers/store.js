@@ -20,6 +20,7 @@ const initialState = Record({
 	storeList: List(),
 	storeDetail: Record({
 		store: null,
+		menuList: List(),
 		reviewList: List(),
 		reviewModal: false,
 	})(),
@@ -38,9 +39,10 @@ export default handleActions(
 		...pender({
 			type: GET_STOREDETAIL,
 			onSuccess: (state, { payload: { data: data } }) => {
-				const { store, reviews } = data
+				const { store, menus, reviews } = data
 				return state
 					.setIn(['storeDetail', 'store'], store)
+					.setIn(['storeDetail', 'menuList'], List(menus))
 					.setIn(['storeDetail', 'reviewList'], List(reviews))
 			},
 		}),

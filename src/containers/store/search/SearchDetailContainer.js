@@ -50,7 +50,7 @@ class SearchDetailContainer extends Component {
 	render() {
 		const { onSearchSubmit, onReviewSubmit, toggleModal } = this
 		const { storeDetail, cateList, parkList } = this.props
-		const { store, reviewList, reviewModal } = storeDetail
+		const { store, menuList, reviewList, reviewModal } = storeDetail
 		const query = store != null ? { park: store.park._id } : null
 
 		return (
@@ -64,13 +64,14 @@ class SearchDetailContainer extends Component {
 					)}
 				/>
 				<main className="container py-3">
-					{store && <SearchDetail store={store} toggle={toggleModal} />}
+					{store && (
+						<SearchDetail store={store} menuList={menuList} toggle={toggleModal} />
+					)}
 					<ReviewList reviewList={reviewList} />
 					{store && (
 						<Form
 							onSubmit={onReviewSubmit}
 							initialValues={{ store: store._id }}
-							// values={query}
 							render={props => (
 								<ReviewForm {...props} isOpen={reviewModal} toggle={toggleModal} />
 							)}
