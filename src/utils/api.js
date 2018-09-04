@@ -12,6 +12,7 @@ export const register = ({ email, password, name, phoneNumber, isOwner }) =>
 		phoneNumber,
 		isOwner,
 	})
+export const myOrderList = () => axios.get('/api/auth/order')
 
 export const parkList = () => axios.get('/api/store/parkList')
 export const cateList = () => axios.get('/api/store/cateList')
@@ -19,6 +20,7 @@ export const storeList = values => axios.get('/api/store/search?' + queryString.
 export const storeDetail = ({ storeId }) => axios.get('/api/store/' + storeId)
 export const insertReview = ({ store, content, score }) =>
 	axios.post('/api/store/review', { store, content, score })
+export const addOrder = ({ store, menus }) => axios.post('/api/store/order', { store, menus })
 
 export const ownerStoreList = () => axios.get('/api/owner/storeList')
 export const addStore = ({ name, park, category, location, phoneNumber, orderable }) =>
