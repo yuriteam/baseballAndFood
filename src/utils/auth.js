@@ -11,7 +11,11 @@ const auth = {
 	 */
 	authHeader() {
 		let token = auth.getToken()
-		return token ? 'Bearer ' + token : ''
+		return {
+			headers: {
+				Authorization: token ? 'Bearer ' + token : '',
+			},
+		}
 	},
 
 	/**

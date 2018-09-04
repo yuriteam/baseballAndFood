@@ -1,3 +1,4 @@
+const axios = require('axios')
 const asyncHandler = require('express-async-handler')
 const Store = require('../../models/store')
 const Menu = require('../../models/menu')
@@ -25,12 +26,16 @@ exports.addStore = asyncHandler(async (req, res, next) => {
 	const owner = req.user._id
 	orderable = orderable === 'Y'
 
-	// location 임시
+	const { data } = await axios.get(
+		'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodeURI(location),
+		{ headers: { Authorization: 'KakaoAK 748b29a61c3e145b51f8172294a9ddfd' } }
+	)
+
 	location = {
 		name: location,
 		loc: {
 			type: 'Point',
-			coordinates: [0, 0],
+			coordinates: [data.documents[0].x, data.documents[0].y],
 		},
 	}
 
@@ -64,21 +69,21 @@ exports.addMenu = asyncHandler(async (req, res, next) => {
 exports.orderList = asyncHandler(async (req, res, next) => {
 	const storeId = req.params.storeId
 	// + 내 상점인지 확인
+	const store = await Store._findByStoreId(storeId)
+	const orders = await Order._findByStoreId(storeId)
 
-	const stores = await Order._findByStoreId(storeId)
-
-	res.json({ stores })
+	res.json({ store, orders })
 })
 
 /**
- * POST /api/owner/orderFinish
+ * POST /api/owner/finishOrder
  * @param {String} orderId
  */
-exports.orderFinish = asyncHandler(async (req, res, next) => {
+exports.finishOrder = asyncHandler(async (req, res, next) => {
 	const { orderId } = req.body
 
 	const order = Order._finishOrderById(orderId)
 	if (!order) throw new Error('배송 완료 설정을 실패했습니다.')
 
-	res.json({ message: '배송을 완료했습니다.' })
+	res.json({ orderId })
 })

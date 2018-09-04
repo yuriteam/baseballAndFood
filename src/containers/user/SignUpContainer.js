@@ -13,7 +13,8 @@ class SignUpContainer extends Component {
 			}
 			await register(values)
 		} catch (e) {
-			return { [FORM_ERROR]: e.message }
+			const { message } = e.response.data
+			return { [FORM_ERROR]: message }
 		}
 	}
 

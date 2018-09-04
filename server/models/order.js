@@ -6,6 +6,7 @@ const OrderSchema = new Schema({
 	store: { type: Schema.Types.ObjectId, ref: 'store' },
 	menus: [{ type: Schema.Types.ObjectId, ref: 'menu' }],
 	finish: { type: Boolean, default: false },
+	ordered: { type: Date, default: Date.now },
 })
 
 /**

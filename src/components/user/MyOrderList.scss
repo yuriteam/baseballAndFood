@@ -1,0 +1,8 @@
+.listText span {
+	&:after {
+		content: ' / ';
+	}
+	&:last-child:after {
+		content: '';
+	}
+}

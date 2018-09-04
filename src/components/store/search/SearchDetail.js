@@ -46,7 +46,7 @@ const SearchDetail = ({ store, menuList, toggle }) => (
 				!auth.getUserInfo().isOwner && (
 					<CardFooter className="d-flex justify-content-between">
 						<Link to={'/store/' + store._id + '/order'} className="btn btn-primary">
-							주문하기
+							배달 신청
 						</Link>
 						<Button color="primary" onClick={toggle}>
 							리뷰 등록

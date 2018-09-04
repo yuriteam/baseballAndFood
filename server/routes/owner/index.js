@@ -12,6 +12,6 @@ router.get('/storeList', controller.storeList)
 router.post('/addStore', controller.addStore)
 router.post('/addMenu', controller.addMenu)
 router.get('/:storeId/orderList', controller.orderList)
-router.post('/orderFinish', controller.orderFinish)
+router.post('/finishOrder', controller.finishOrder)
 
 module.exports = router

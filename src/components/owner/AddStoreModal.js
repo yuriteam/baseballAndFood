@@ -13,12 +13,27 @@ import {
 	CustomInput,
 } from 'reactstrap'
 import { Field } from 'react-final-form'
+import PostCodeModal from 'components/owner/PostCodeModal'
 
 const AddStoreModal = props => {
-	const { isOpen, toggle, parkList, cateList, handleSubmit, submitting, submitError } = props
+	const {
+		isOpen,
+		toggle,
+		nestedToggle,
+		parkList,
+		cateList,
+		handleSubmit,
+		submitting,
+		submitError,
+	} = props
+	const { reset } = props.form
 	return (
 		<Modal isOpen={isOpen} toggle={toggle} size="lg">
-			<Form onSubmit={handleSubmit}>
+			<Form
+				onSubmit={event => {
+					handleSubmit(event).then(reset)
+				}}
+			>
 				<ModalHeader toggle={toggle}>매장 추가</ModalHeader>
 				<ModalBody>
 					{submitError && (
@@ -78,6 +93,7 @@ const AddStoreModal = props => {
 								component="input"
 								placeholder="주소"
 								className="form-control"
+								onClick={nestedToggle}
 							/>
 						</Col>
 					</FormGroup>

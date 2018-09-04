@@ -24,7 +24,8 @@ class SearchDetailContainer extends Component {
 			await insertReview(values)
 			toggleReviewModal()
 		} catch (e) {
-			return { [FORM_ERROR]: e.message }
+			const { message } = e.response.data
+			return { [FORM_ERROR]: message }
 		}
 	}
 
@@ -73,7 +74,14 @@ class SearchDetailContainer extends Component {
 							onSubmit={onReviewSubmit}
 							initialValues={{ store: store._id }}
 							render={props => (
-								<ReviewForm {...props} isOpen={reviewModal} toggle={toggleModal} />
+								<ReviewForm
+									{...props}
+									isOpen={reviewModal}
+									toggle={() => {
+										props.form.reset()
+										toggleModal()
+									}}
+								/>
 							)}
 						/>
 					)}

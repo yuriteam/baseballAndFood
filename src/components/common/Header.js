@@ -24,6 +24,11 @@ class Header extends Component {
 					)}
 					{isLogged && (
 						<div>
+							{!isOwner && (
+								<Link className="btn btn-primary" to="/myorder">
+									내 주문
+								</Link>
+							)}
 							{isOwner && (
 								<Link className="btn btn-primary" to="/owner">
 									사장님

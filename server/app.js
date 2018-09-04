@@ -44,6 +44,7 @@ app.set('jwt-secret', config.secret)
 // 라우터
 app.use('/api', routes)
 
+require('./test')
 // app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler

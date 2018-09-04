@@ -13,7 +13,8 @@ class OrderContainer extends Component {
 		try {
 			await addOrder(values)
 		} catch (e) {
-			return { [FORM_ERROR]: e.message }
+			const { message } = e.response.data
+			return { [FORM_ERROR]: message }
 		}
 	}
 

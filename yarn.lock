@@ -6155,12 +6155,12 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-daum-postcode@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/react-daum-postcode/-/react-daum-postcode-1.7.0.tgz#aa91fdaf9359344837f4cdfd95a813782f0aba57"
+react-daum-postcode@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-daum-postcode/-/react-daum-postcode-1.6.0.tgz#64b0b86f016164192700ee2782ce7336b0cbb35c"
   dependencies:
-    prop-types "^15.6.2"
-    react "^16.4.2"
+    prop-types "^15.6.1"
+    react "^16.3.2"
 
 react-dev-utils@^5.0.2:
   version "5.0.2"
@@ -6267,7 +6267,7 @@ react-transition-group@^2.3.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react@^16.4.2:
+react@^16.3.2, react@^16.4.2:
   version "16.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-16.4.2.tgz#2cd90154e3a9d9dd8da2991149fdca3c260e129f"
   dependencies:

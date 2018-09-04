@@ -19,10 +19,15 @@ import { Field } from 'react-final-form'
 export default class MenuMgmtModal extends Component {
 	render() {
 		const { isOpen, toggle, handleSubmit, submitting } = this.props
+		const { reset } = this.props.form
 		return (
 			<Modal isOpen={isOpen} toggle={toggle}>
 				<ModalHeader toggle={toggle}>메뉴 관리</ModalHeader>
-				<Form onSubmit={handleSubmit}>
+				<Form
+					onSubmit={event => {
+						handleSubmit(event).then(reset)
+					}}
+				>
 					<ModalBody>
 						<FormGroup row>
 							<Label for="name" sm={2}>

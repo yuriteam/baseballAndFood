@@ -8,6 +8,7 @@ import OwnerStoreList from 'components/owner/OwnerStoreList'
 import AddStoreButton from 'components/owner/AddStoreButton'
 import AddStoreModal from 'components/owner/AddStoreModal'
 import MenuMgmtModal from 'components/owner/MenuMgmtModal'
+import PostCodeModal from 'components/owner/PostCodeModal'
 
 class OwnerContainer extends Component {
 	onAddStoreSubmit = async values => {
@@ -16,7 +17,8 @@ class OwnerContainer extends Component {
 			await addStore(values)
 			toggleAddStoreModal()
 		} catch (e) {
-			return { [FORM_ERROR]: e.message }
+			const { message } = e.response.data
+			return { [FORM_ERROR]: message }
 		}
 	}
 
@@ -26,13 +28,19 @@ class OwnerContainer extends Component {
 			await addMenu({ ...values, store: selectedStoreKey })
 			toggleMenuMgmtModal()
 		} catch (e) {
-			return { [FORM_ERROR]: e.message }
+			const { message } = e.response.data
+			return { [FORM_ERROR]: message }
 		}
 	}
 
 	toggleAddStoreModal = () => {
 		const { toggleAddStoreModal } = this.props
 		toggleAddStoreModal()
+	}
+
+	togglePostCodeModal = () => {
+		const { togglePostCodeModal } = this.props
+		togglePostCodeModal()
 	}
 
 	toggleMenuMgmtModal = key => {
@@ -54,33 +62,53 @@ class OwnerContainer extends Component {
 		const {
 			onAddStoreSubmit,
 			toggleAddStoreModal,
+			togglePostCodeModal,
 			toggleMenuMgmtModal,
 			onMenuMgmtSubmit,
 		} = this
-		const { parkList, cateList, storeList, addStoreModal, menuMgmtModal } = this.props
+		const {
+			parkList,
+			cateList,
+			storeList,
+			addStoreModal,
+			postCodeModal,
+			menuMgmtModal,
+			changeInput,
+		} = this.props
+
 		return (
 			<Fragment>
 				<AddStoreButton toggle={toggleAddStoreModal} />
 				<OwnerStoreList storeList={storeList} toggle={toggleMenuMgmtModal} />
 				<Form
 					onSubmit={onAddStoreSubmit}
+					initialValues={{ location: postCodeModal.input }}
 					render={props => (
 						<AddStoreModal
 							{...props}
 							isOpen={addStoreModal}
-							toggle={toggleAddStoreModal}
+							toggle={() => {
+								changeInput('')
+								props.form.reset()
+								toggleAddStoreModal()
+							}}
+							nestedToggle={togglePostCodeModal}
 							parkList={parkList}
 							cateList={cateList}
 						/>
 					)}
 				/>
+				<PostCodeModal toggle={togglePostCodeModal} />
 				<Form
 					onSubmit={onMenuMgmtSubmit}
 					render={props => (
 						<MenuMgmtModal
 							{...props}
 							isOpen={menuMgmtModal}
-							toggle={toggleMenuMgmtModal}
+							toggle={() => {
+								props.form.reset()
+								toggleMenuMgmtModal()
+							}}
 						/>
 					)}
 				/>
@@ -95,6 +123,7 @@ export default connect(
 		cateList: base.cateList,
 		storeList: owner.storeList,
 		addStoreModal: owner.addStoreModal,
+		postCodeModal: owner.postCodeModal,
 		menuMgmtModal: owner.menuMgmtModal,
 		selectedStoreKey: owner.selectedStoreKey,
 	}),

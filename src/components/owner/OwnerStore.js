@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import {
 	Col,
 	Card,
@@ -21,7 +22,10 @@ const OwnerStore = ({ store, toggle }) => (
 				<CardSubtitle className="text-muted mb-3">{store.park.name}</CardSubtitle>
 				<CardText>{store.location.name}</CardText>
 			</CardBody>
-			<CardFooter className="text-right">
+			<CardFooter className="d-flex justify-content-between">
+				<Link to={'/owner/' + store._id + '/order'} className="btn btn-primary">
+					주문 확인
+				</Link>
 				<Button
 					color="primary"
 					onClick={() => {

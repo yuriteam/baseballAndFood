@@ -11,6 +11,7 @@ import {
 	OrderPage,
 	MyOrderPage,
 	OwnerPage,
+	OwnerOrderPage,
 	NotFoundPage,
 } from 'containers/pages'
 import PrivateRoute from 'utils/PrivateRoute'
@@ -24,7 +25,8 @@ const App = () => (
 		<Route exact path="/store/:storeId" component={DetailPage} />
 		<PrivateRoute exact path="/store/:storeId/order" component={OrderPage} />
 		<PrivateRoute path="/myorder" component={MyOrderPage} />
-		<PrivateRoute path="/owner" component={OwnerPage} />
+		<PrivateRoute exact path="/owner" component={OwnerPage} />
+		<PrivateRoute path="/owner/:storeId/order" component={OwnerOrderPage} />
 		<Route component={NotFoundPage} />
 	</Switch>
 )

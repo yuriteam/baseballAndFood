@@ -16,11 +16,16 @@ import auth from 'utils/auth'
 
 const ReviewForm = props => {
 	const { isOpen, toggle, handleSubmit, submitting, submitError } = props
+	const { reset } = props.form
 	return (
 		<Fragment>
 			{auth.getToken() !== null && (
 				<Modal isOpen={isOpen} toggle={toggle}>
-					<Form onSubmit={handleSubmit}>
+					<Form
+						onSubmit={event => {
+							handleSubmit(event).then(reset)
+						}}
+					>
 						<ModalHeader toggle={toggle}>리뷰 등록</ModalHeader>
 						<ModalBody>
 							{submitError && (
@@ -33,18 +38,20 @@ const ReviewForm = props => {
 								{_.times(5, i => {
 									i++
 									return (
-										<Field name="score" type="radio" value={i}>
-											{({ input }) => (
-												<CustomInput
-													{...input}
-													value={i}
-													type="radio"
-													label={i + '점'}
-													id={'score_' + i}
-													inline
-												/>
-											)}
-										</Field>
+										<Fragment key={'field_' + i}>
+											<Field name="score" type="radio" value={i}>
+												{({ input }) => (
+													<CustomInput
+														{...input}
+														value={i}
+														type="radio"
+														label={i + '점'}
+														id={'score_' + i}
+														inline
+													/>
+												)}
+											</Field>
+										</Fragment>
 									)
 								})}
 							</FormGroup>
