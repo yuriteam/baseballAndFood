@@ -22,11 +22,14 @@ class Header extends Component {
 						</Link>
 					)}
 					{isLogged && (
-						<Fragment>
+						<div>
+							<Link className="btn btn-primary" to="/owner">
+								사장님
+							</Link>
 							<Button color="primary" onClick={this.logout}>
 								로그아웃
 							</Button>
-						</Fragment>
+						</div>
 					)}
 				</div>
 			</nav>
