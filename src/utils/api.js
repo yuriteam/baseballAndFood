@@ -25,3 +25,5 @@ export const addOrder = ({ store, menus }) => axios.post('/api/store/order', { s
 export const ownerStoreList = () => axios.get('/api/owner/storeList')
 export const addStore = ({ name, park, category, location, phoneNumber, orderable }) =>
 	axios.post('/api/owner/addStore', { name, park, category, location, phoneNumber, orderable })
+export const addMenu = ({ store, name, price }) =>
+	axios.post('/api/owner/addMenu', { store, name, price })

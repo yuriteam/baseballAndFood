@@ -7,6 +7,7 @@ import { FORM_ERROR } from 'final-form'
 import OwnerStoreList from 'components/owner/OwnerStoreList'
 import AddStoreButton from 'components/owner/AddStoreButton'
 import AddStoreModal from 'components/owner/AddStoreModal'
+import MenuMgmtModal from 'components/owner/MenuMgmtModal'
 
 class OwnerContainer extends Component {
 	onAddStoreSubmit = async values => {
@@ -19,9 +20,24 @@ class OwnerContainer extends Component {
 		}
 	}
 
+	onMenuMgmtSubmit = async values => {
+		const { addMenu, toggleMenuMgmtModal, selectedStoreKey } = this.props
+		try {
+			await addMenu({ ...values, store: selectedStoreKey })
+			toggleMenuMgmtModal()
+		} catch (e) {
+			return { [FORM_ERROR]: e.message }
+		}
+	}
+
 	toggleAddStoreModal = () => {
 		const { toggleAddStoreModal } = this.props
 		toggleAddStoreModal()
+	}
+
+	toggleMenuMgmtModal = key => {
+		const { toggleMenuMgmtModal } = this.props
+		toggleMenuMgmtModal(key)
 	}
 
 	async componentDidMount() {
@@ -35,12 +51,17 @@ class OwnerContainer extends Component {
 	}
 
 	render() {
-		const { onAddStoreSubmit, toggleAddStoreModal } = this
-		const { parkList, cateList, storeList, addStoreModal } = this.props
+		const {
+			onAddStoreSubmit,
+			toggleAddStoreModal,
+			toggleMenuMgmtModal,
+			onMenuMgmtSubmit,
+		} = this
+		const { parkList, cateList, storeList, addStoreModal, menuMgmtModal } = this.props
 		return (
 			<Fragment>
 				<AddStoreButton toggle={toggleAddStoreModal} />
-				<OwnerStoreList storeList={storeList} />
+				<OwnerStoreList storeList={storeList} toggle={toggleMenuMgmtModal} />
 				<Form
 					onSubmit={onAddStoreSubmit}
 					render={props => (
@@ -50,6 +71,16 @@ class OwnerContainer extends Component {
 							toggle={toggleAddStoreModal}
 							parkList={parkList}
 							cateList={cateList}
+						/>
+					)}
+				/>
+				<Form
+					onSubmit={onMenuMgmtSubmit}
+					render={props => (
+						<MenuMgmtModal
+							{...props}
+							isOpen={menuMgmtModal}
+							toggle={toggleMenuMgmtModal}
 						/>
 					)}
 				/>
@@ -64,6 +95,8 @@ export default connect(
 		cateList: base.cateList,
 		storeList: owner.storeList,
 		addStoreModal: owner.addStoreModal,
+		menuMgmtModal: owner.menuMgmtModal,
+		selectedStoreKey: owner.selectedStoreKey,
 	}),
 	dispatch => bindActionCreators(ownerActions, dispatch)
 )(OwnerContainer)
