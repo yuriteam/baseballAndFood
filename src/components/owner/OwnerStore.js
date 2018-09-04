@@ -10,7 +10,7 @@ import {
 	Button,
 } from 'reactstrap'
 
-const OwnerStore = ({ store }) => (
+const OwnerStore = ({ store, toggle }) => (
 	<Col xs="12" className="mb-3">
 		<Card>
 			<CardBody>
@@ -22,7 +22,14 @@ const OwnerStore = ({ store }) => (
 				<CardText>{store.location.name}</CardText>
 			</CardBody>
 			<CardFooter className="text-right">
-				<Button color="primary">메뉴 등록</Button>
+				<Button
+					color="primary"
+					onClick={() => {
+						toggle(store._id)
+					}}
+				>
+					메뉴 등록
+				</Button>
 			</CardFooter>
 		</Card>
 	</Col>

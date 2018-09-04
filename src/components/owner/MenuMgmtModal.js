@@ -18,37 +18,46 @@ import { Field } from 'react-final-form'
 
 export default class MenuMgmtModal extends Component {
 	render() {
+		const { isOpen, toggle, handleSubmit, submitting } = this.props
 		return (
-			<Modal isOpen={this.props.modal} toggle={this.props.toggleModal}>
-				<ModalHeader toggle={this.props.toggleModal}>메뉴 관리</ModalHeader>
-				<Form onSubmit={this.props.handleSubmit}>
+			<Modal isOpen={isOpen} toggle={toggle}>
+				<ModalHeader toggle={toggle}>메뉴 관리</ModalHeader>
+				<Form onSubmit={handleSubmit}>
 					<ModalBody>
-						<ListGroup>
-							<ListGroupItem>
-								<ListGroupItemHeading>List group item heading</ListGroupItemHeading>
-								<ListGroupItemText>ㅁㅁ</ListGroupItemText>
-							</ListGroupItem>
-						</ListGroup>
 						<FormGroup row>
-							<Label for="storeName" sm={2}>
-								매장명
+							<Label for="name" sm={2}>
+								이름
 							</Label>
 							<Col sm={10}>
 								<Field
-									name="storeName"
+									name="name"
 									type="text"
 									component="input"
-									id="storeName"
+									id="name"
+									className="form-control"
+								/>
+							</Col>
+						</FormGroup>
+						<FormGroup row>
+							<Label for="price" sm={2}>
+								가격
+							</Label>
+							<Col sm={10}>
+								<Field
+									name="price"
+									type="number"
+									component="input"
+									id="price"
 									className="form-control"
 								/>
 							</Col>
 						</FormGroup>
 					</ModalBody>
 					<ModalFooter>
-						<Button color="primary" type="submit" disabled={this.props.submitting}>
+						<Button color="primary" type="submit" disabled={submitting}>
 							추가
 						</Button>
-						<Button color="secondary" onClick={this.props.toggleModal}>
+						<Button color="secondary" onClick={toggle}>
 							취소
 						</Button>
 					</ModalFooter>
