@@ -19,6 +19,9 @@ const SearchDetail = ({ store, menuList, toggle }) => {
 					<CardSubtitle>{store.location.name}</CardSubtitle>
 				</CardHeader>
 				<CardBody>
+					{store.image && (
+						<img src={'/upload/' + store.image} className="rounded img-fluid mb-3" />
+					)}
 					<ul className={['m-0 p-0', styles.ul].join(' ')}>
 						<li className="mb-3">
 							<FontAwesomeIcon icon={faTag} size="lg" className="text-primary mr-2" />

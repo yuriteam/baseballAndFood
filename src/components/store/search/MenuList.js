@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { Row, Col, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap'
 
 const Menu = ({ menu }) => (
-	<Col xs="6" sm="4" md="3" lg="2">
+	<Col xs="6" sm="4" md="3" lg="2" className="mb-3">
 		<Card>
 			<CardImg
 				top
@@ -19,6 +19,11 @@ const MenuList = ({ menuList }) => (
 		{menuList.map((menu, i) => (
 			<Menu key={'menu_' + menu._id} menu={menu} />
 		))}
+		{menuList.size == 0 && (
+			<Col xs="11" className="mx-auto p-3 border rounded">
+				주문 가능한 메뉴가 없습니다.
+			</Col>
+		)}
 	</Row>
 )
 

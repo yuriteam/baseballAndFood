@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const fileUpload = require('express-fileupload')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const path = require('path')
 const createError = require('http-errors')
 
 // config
@@ -47,7 +48,8 @@ app.set('jwt-secret', config.secret)
 app.use('/api', routes)
 
 // require('./test')
-// app.use(express.static(path.join(__dirname, 'public')));
+// 정적 파일 제공
+app.use(express.static(path.join(__dirname, 'public')))
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
