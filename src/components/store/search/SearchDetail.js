@@ -8,54 +8,57 @@ import MenuList from './MenuList'
 import StoreMap from './StoreMap'
 import styles from './SearchDetail.scss'
 
-const SearchDetail = ({ store, menuList, toggle }) => (
-	<Fragment>
-		<StoreMap />
-		<Card>
-			<CardHeader className="bg-light">
-				<h3 className="font-weight-bold card-title mb-4 text-primary">{store.name}</h3>
-				<CardSubtitle>{store.location.name}</CardSubtitle>
-			</CardHeader>
-			<CardBody>
-				<ul className={['m-0 p-0', styles.ul].join(' ')}>
-					<li className="mb-3">
-						<FontAwesomeIcon icon={faTag} size="lg" className="text-primary mr-2" />
-						{store.category.name}
-					</li>
-					<li className="mb-3">
-						<FontAwesomeIcon
-							icon={faMapMarkerAlt}
-							size="lg"
-							className="text-primary mr-2"
-						/>
-						{store.park.name}
-					</li>
-					<li>
-						<FontAwesomeIcon
-							icon={faPhoneSquare}
-							size="lg"
-							className="text-primary mr-2"
-						/>
-						{store.phoneNumber}
-					</li>
-				</ul>
-			</CardBody>
-			<CardBody>
-				<MenuList menuList={menuList} />
-			</CardBody>
-			{auth.getToken() !== null &&
-				!auth.getUserInfo().isOwner && (
-					<CardFooter className="d-flex justify-content-between">
-						<Link to={'/store/' + store._id + '/order'} className="btn btn-primary">
-							배달 신청
-						</Link>
-						<Button color="primary" onClick={toggle}>
-							리뷰 등록
-						</Button>
-					</CardFooter>
-				)}
-		</Card>
-	</Fragment>
-)
+const SearchDetail = ({ store, menuList, toggle }) => {
+	var { location } = store
+	return (
+		<Fragment>
+			<StoreMap location={location} />
+			<Card>
+				<CardHeader className="bg-light">
+					<h3 className="font-weight-bold card-title mb-4 text-primary">{store.name}</h3>
+					<CardSubtitle>{store.location.name}</CardSubtitle>
+				</CardHeader>
+				<CardBody>
+					<ul className={['m-0 p-0', styles.ul].join(' ')}>
+						<li className="mb-3">
+							<FontAwesomeIcon icon={faTag} size="lg" className="text-primary mr-2" />
+							{store.category.name}
+						</li>
+						<li className="mb-3">
+							<FontAwesomeIcon
+								icon={faMapMarkerAlt}
+								size="lg"
+								className="text-primary mr-2"
+							/>
+							{store.park.name}
+						</li>
+						<li>
+							<FontAwesomeIcon
+								icon={faPhoneSquare}
+								size="lg"
+								className="text-primary mr-2"
+							/>
+							{store.phoneNumber}
+						</li>
+					</ul>
+				</CardBody>
+				<CardBody>
+					<MenuList menuList={menuList} />
+				</CardBody>
+				{auth.getToken() !== null &&
+					!auth.getUserInfo().isOwner && (
+						<CardFooter className="d-flex justify-content-between">
+							<Link to={'/store/' + store._id + '/order'} className="btn btn-primary">
+								배달 신청
+							</Link>
+							<Button color="primary" onClick={toggle}>
+								리뷰 등록
+							</Button>
+						</CardFooter>
+					)}
+			</Card>
+		</Fragment>
+	)
+}
 
 export default SearchDetail
