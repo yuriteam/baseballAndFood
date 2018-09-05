@@ -1,15 +1,13 @@
 /*global daum*/
-
 import React, { Component } from 'react'
 
-export default class StoreMap extends Component {
+class StoreMap extends Component {
 	shouldComponentUpdate(nextProps, nextState) {
 		return JSON.stringify(nextProps) != JSON.stringify(this.props)
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		this.renderMap()
-		console.log('update')
 	}
 
 	componentDidMount() {
@@ -22,7 +20,7 @@ export default class StoreMap extends Component {
 		var container = document.getElementById('map')
 		var options = {
 			center: new daum.maps.LatLng(coordinates[1], coordinates[0]),
-			level: 3,
+			level: 1,
 		}
 		var map = new daum.maps.Map(container, options)
 
@@ -44,3 +42,5 @@ export default class StoreMap extends Component {
 		return <div id="map" style={{ height: 400 }} className="mb-3" />
 	}
 }
+
+export default StoreMap

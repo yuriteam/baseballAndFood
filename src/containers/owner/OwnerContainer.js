@@ -20,14 +20,15 @@ class OwnerContainer extends Component {
 	onAddStoreSubmit = async values => {
 		const { imageFile, addStore, toggleAddStoreModal } = this.props
 
-		const formData = new FormData()
-		formData.append('file', imageFile)
-
 		try {
-			const {
-				data: { image: image },
-			} = await upload({ formData })
-			values.image = image
+			if (imageFile) {
+				const formData = new FormData()
+				formData.append('file', imageFile)
+				const {
+					data: { image: image },
+				} = await upload({ formData })
+				values.image = image
+			}
 			await addStore(values)
 			toggleAddStoreModal()
 		} catch (e) {
