@@ -25,6 +25,6 @@ export default class StoreMap extends Component {
 	}
 
 	render() {
-		return <div id="map" style={{ width: 1110, height: 400 }} />
+		return <div id="map" style={{ height: 400 }} className="mb-3" />
 	}
 }

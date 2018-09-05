@@ -10,7 +10,7 @@
 		"react/jsx-uses-vars": "error",
 		"prettier/prettier": "error"
 	},
-	"globals": { "_": true },
+	"globals": { "_": true, "daum": true },
 	"env": {
 		"node": true,
 		"browser": true,

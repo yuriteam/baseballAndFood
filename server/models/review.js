@@ -44,6 +44,19 @@ ReviewSchema.statics._findByStoreId = function(store) {
 		.exec()
 }
 
+// 상점 인덱스로 리뷰 평균 계산
+ReviewSchema.statics._avgByStoreId = function(store) {
+	return this.aggregate([
+		{ $match: { store: mongoose.Types.ObjectId(store) } },
+		{
+			$group: {
+				_id: '$store',
+				avg: { $avg: '$score' },
+			},
+		},
+	]).exec()
+}
+
 // 리뷰 인덱스로 리뷰 삭제
 ReviewSchema.statics._deleteById = function(_id) {
 	return this.findByIdAndRemove(_id).exec()

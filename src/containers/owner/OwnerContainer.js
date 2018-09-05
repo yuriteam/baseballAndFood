@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import * as ownerActions from 'reducers/owner'
 import { Form } from 'react-final-form'
 import { FORM_ERROR } from 'final-form'
+import { upload } from 'utils/api'
 import OwnerStoreList from 'components/owner/OwnerStoreList'
 import AddStoreButton from 'components/owner/AddStoreButton'
 import AddStoreModal from 'components/owner/AddStoreModal'
@@ -11,9 +12,22 @@ import MenuMgmtModal from 'components/owner/MenuMgmtModal'
 import PostCodeModal from 'components/owner/PostCodeModal'
 
 class OwnerContainer extends Component {
+	changeFileInput = e => {
+		const { changeFileInput } = this.props
+		changeFileInput(e.target.files[0])
+	}
+
 	onAddStoreSubmit = async values => {
-		const { addStore, toggleAddStoreModal } = this.props
+		const { imageFile, addStore, toggleAddStoreModal } = this.props
+
+		const formData = new FormData()
+		formData.append('file', imageFile)
+
 		try {
+			const {
+				data: { image: image },
+			} = await upload({ formData })
+			values.image = image
 			await addStore(values)
 			toggleAddStoreModal()
 		} catch (e) {
@@ -34,13 +48,13 @@ class OwnerContainer extends Component {
 	}
 
 	toggleAddStoreModal = () => {
-		const { toggleAddStoreModal } = this.props
+		const { changeFileInput, toggleAddStoreModal } = this.props
 		toggleAddStoreModal()
 	}
 
-	togglePostCodeModal = () => {
+	togglePostCodeModal = values => {
 		const { togglePostCodeModal } = this.props
-		togglePostCodeModal()
+		togglePostCodeModal(values)
 	}
 
 	toggleMenuMgmtModal = key => {
@@ -58,8 +72,13 @@ class OwnerContainer extends Component {
 		}
 	}
 
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	return !this.props.postCodeModal.modal && nextProps.postCodeModal.modal
+	// }
+
 	render() {
 		const {
+			changeFileInput,
 			onAddStoreSubmit,
 			toggleAddStoreModal,
 			togglePostCodeModal,
@@ -73,7 +92,6 @@ class OwnerContainer extends Component {
 			addStoreModal,
 			postCodeModal,
 			menuMgmtModal,
-			changeInput,
 		} = this.props
 
 		return (
@@ -82,19 +100,19 @@ class OwnerContainer extends Component {
 				<OwnerStoreList storeList={storeList} toggle={toggleMenuMgmtModal} />
 				<Form
 					onSubmit={onAddStoreSubmit}
-					initialValues={{ location: postCodeModal.input }}
+					initialValues={postCodeModal.parentInput}
 					render={props => (
 						<AddStoreModal
 							{...props}
 							isOpen={addStoreModal}
 							toggle={() => {
-								changeInput('')
 								props.form.reset()
 								toggleAddStoreModal()
 							}}
 							nestedToggle={togglePostCodeModal}
 							parkList={parkList}
 							cateList={cateList}
+							changeFileInput={changeFileInput}
 						/>
 					)}
 				/>
@@ -126,6 +144,7 @@ export default connect(
 		postCodeModal: owner.postCodeModal,
 		menuMgmtModal: owner.menuMgmtModal,
 		selectedStoreKey: owner.selectedStoreKey,
+		imageFile: owner.imageFile,
 	}),
 	dispatch => bindActionCreators(ownerActions, dispatch)
 )(OwnerContainer)

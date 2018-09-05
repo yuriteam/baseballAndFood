@@ -23,10 +23,10 @@ export const addOrder = ({ store, menus }) =>
 	axios.post('/api/store/order', { store, menus }, auth.authHeader())
 
 export const ownerStoreList = () => axios.get('/api/owner/storeList', auth.authHeader())
-export const addStore = ({ name, park, category, location, phoneNumber, orderable }) =>
+export const addStore = ({ name, park, category, location, phoneNumber, orderable, image }) =>
 	axios.post(
 		'/api/owner/addStore',
-		{ name, park, category, location, phoneNumber, orderable },
+		{ name, park, category, location, phoneNumber, orderable, image },
 		auth.authHeader()
 	)
 export const addMenu = ({ store, name, price }) =>
@@ -35,3 +35,9 @@ export const ownerOrderList = ({ storeId }) =>
 	axios.get('/api/owner/' + storeId + '/orderList', auth.authHeader())
 export const finishOrder = ({ orderId }) =>
 	axios.post('/api/owner/finishOrder', { orderId }, auth.authHeader())
+
+export const upload = ({ formData }) => {
+	let config = auth.authHeader()
+	config.headers['content-type'] = 'multipart/form-data'
+	return axios.post('/api/upload', formData, config)
+}

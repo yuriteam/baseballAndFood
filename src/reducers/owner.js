@@ -13,6 +13,7 @@ const ADD_MENU = 'owner/ADD_MENU'
 const GET_OWNERORDERLIST = 'owner/GET_OWNERORDERLIST'
 const FINISH_ORDER = 'owner/FINISH_ORDER'
 const CHANGE_INPUT = 'owner/CHANGE_INPUT'
+const CHANGE_FILE_INPUT = 'owner/CHANGE_FILE_INPUT'
 
 // ACTION CREATORS
 export const getStoreList = createAction(GET_STORELIST, api.ownerStoreList)
@@ -24,12 +25,14 @@ export const addMenu = createAction(ADD_MENU, api.addMenu)
 export const getOwnerOrderList = createAction(GET_OWNERORDERLIST, api.ownerOrderList)
 export const finishOrder = createAction(FINISH_ORDER, api.finishOrder)
 export const changeInput = createAction(CHANGE_INPUT)
+export const changeFileInput = createAction(CHANGE_FILE_INPUT)
 
 // STATE INITIALIZE
 const initialState = Record({
 	storeList: List(),
 	addStoreModal: false,
 	postCodeModal: Record({
+		parentInput: null,
 		input: '',
 		modal: false,
 	})(),
@@ -37,6 +40,7 @@ const initialState = Record({
 	selectedStoreKey: '',
 	orderList: List(),
 	orderStore: null,
+	imageFile: null,
 })()
 const OrderRecord = Record({
 	_id: '',
@@ -58,9 +62,23 @@ export default handleActions(
 			},
 		}),
 		[TOGGLE_ADD_STORE_MODAL]: (state, action) =>
-			state.set('addStoreModal', !state.addStoreModal),
-		[TOGGLE_POSTCODE_MODAL]: (state, action) =>
-			state.setIn(['postCodeModal', 'modal'], !state.postCodeModal.modal),
+			state
+				.set('addStoreModal', !state.addStoreModal)
+				.setIn(['postCodeModal', 'parentInput'], null)
+				.set('imageFile', null),
+		[TOGGLE_POSTCODE_MODAL]: (state, action) => {
+			if (state.postCodeModal.modal) {
+				let newParentInput = state.postCodeModal.parentInput
+				newParentInput.location = state.postCodeModal.input
+				return state
+					.setIn(['postCodeModal', 'modal'], !state.postCodeModal.modal)
+					.setIn(['postCodeModal', 'input'], '')
+					.setIn(['postCodeModal', 'parentInput'], newParentInput)
+			}
+			return state
+				.setIn(['postCodeModal', 'modal'], !state.postCodeModal.modal)
+				.setIn(['postCodeModal', 'parentInput'], action.payload)
+		},
 		...pender({
 			type: ADD_STORE,
 			onSuccess: (state, { payload: { data: data } }) => {
@@ -97,6 +115,7 @@ export default handleActions(
 			},
 		}),
 		[CHANGE_INPUT]: (state, action) => state.setIn(['postCodeModal', 'input'], action.payload),
+		[CHANGE_FILE_INPUT]: (state, action) => state.set('imageFile', action.payload),
 	},
 	initialState
 )

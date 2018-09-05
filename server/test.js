@@ -13,7 +13,13 @@ async function updateAll() {
 			{ headers: { Authorization: 'KakaoAK 748b29a61c3e145b51f8172294a9ddfd' } }
 		)
 		const result = [data.documents[0].x, data.documents[0].y]
-		await Store.findByIdAndUpdate(store._id, { $set: { 'location.loc.coordinates': result } })
+		console.log(result)
+		let store2 = await Store.findByIdAndUpdate(
+			store._id,
+			{ $set: { 'location.loc.coordinates': result } },
+			{ new: true }
+		)
+		console.log(store2.location.loc)
 	})
 
 	const parks = await Park.find({})
@@ -26,6 +32,7 @@ async function updateAll() {
 			{ headers: { Authorization: 'KakaoAK 748b29a61c3e145b51f8172294a9ddfd' } }
 		)
 		const result = [data.documents[0].x, data.documents[0].y]
+		// console.log(result)
 		await Park.findByIdAndUpdate(park._id, { $set: { 'location.loc.coordinates': result } })
 	})
 }

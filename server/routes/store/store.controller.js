@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler')
+const mongoose = require('mongoose')
 const Park = require('../../models/park')
 const Store = require('../../models/store')
 const Menu = require('../../models/menu')
@@ -32,13 +33,13 @@ exports.search = asyncHandler(async (req, res, next) => {
 	const { park, name, cate } = req.query
 	let options = {}
 	if (park) {
-		options.park = park
+		options.park = mongoose.Types.ObjectId(park)
 	}
 	if (name) {
 		options.name = { $regex: name, $options: 'i' }
 	}
 	if (cate) {
-		options.category = cate
+		options.category = mongoose.Types.ObjectId(cate)
 	}
 
 	const stores = await Store._findByOptions(options)
@@ -52,9 +53,14 @@ exports.search = asyncHandler(async (req, res, next) => {
  */
 exports.detail = asyncHandler(async (req, res, next) => {
 	const storeId = req.params.storeId
+
 	let store = await Store._findByStoreId(storeId)
+	let avg = await Review._avgByStoreId(storeId)
+	store.avg = avg.length > 0 ? avg[0].avg : 0
+
 	let menus = await Menu._findByStoreId(storeId)
 	let reviews = await Review._findByStoreId(storeId)
+
 	res.json({ store, menus, reviews })
 })
 

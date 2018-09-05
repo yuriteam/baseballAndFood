@@ -3,6 +3,7 @@ const express = require('express')
 
 // express 미들웨어
 const mongoose = require('mongoose')
+const fileUpload = require('express-fileupload')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const createError = require('http-errors')
@@ -37,6 +38,7 @@ app.use(morgan('dev'))
 // parser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(fileUpload())
 
 // JWT 설정
 app.set('jwt-secret', config.secret)
@@ -44,7 +46,7 @@ app.set('jwt-secret', config.secret)
 // 라우터
 app.use('/api', routes)
 
-require('./test')
+// require('./test')
 // app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler

@@ -63,7 +63,7 @@ class PostCodeModal extends Component {
 }
 
 export default connect(
-	({ base, owner }) => ({
+	({ owner }) => ({
 		postCodeModal: owner.postCodeModal,
 	}),
 	dispatch => bindActionCreators(ownerActions, dispatch)

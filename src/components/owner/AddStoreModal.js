@@ -13,7 +13,6 @@ import {
 	CustomInput,
 } from 'reactstrap'
 import { Field } from 'react-final-form'
-import PostCodeModal from 'components/owner/PostCodeModal'
 
 const AddStoreModal = props => {
 	const {
@@ -25,6 +24,8 @@ const AddStoreModal = props => {
 		handleSubmit,
 		submitting,
 		submitError,
+		changeFileInput,
+		values,
 	} = props
 	const { reset } = props.form
 	return (
@@ -93,7 +94,9 @@ const AddStoreModal = props => {
 								component="input"
 								placeholder="주소"
 								className="form-control"
-								onClick={nestedToggle}
+								onClick={() => {
+									nestedToggle(values)
+								}}
 							/>
 						</Col>
 					</FormGroup>
@@ -139,6 +142,20 @@ const AddStoreModal = props => {
 									/>
 								)}
 							</Field>
+						</Col>
+					</FormGroup>
+					<FormGroup row>
+						<Label for="imageFile" sm="2">
+							이미지
+						</Label>
+						<Col sm="10">
+							<CustomInput
+								type="file"
+								id="imageFile"
+								name="image"
+								label="이미지 입력"
+								onChange={changeFileInput}
+							/>
 						</Col>
 					</FormGroup>
 				</ModalBody>

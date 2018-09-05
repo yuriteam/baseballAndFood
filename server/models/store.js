@@ -15,6 +15,7 @@ const StoreSchema = new Schema({
 	},
 	phoneNumber: String,
 	orderable: { type: Boolean, default: false },
+	image: String,
 })
 
 StoreSchema.index({ owner: 1 })
@@ -32,7 +33,8 @@ StoreSchema.statics._create = function(
 	category,
 	location,
 	phoneNumber,
-	orderable
+	orderable,
+	image
 ) {
 	const store = new this({
 		name,
@@ -42,17 +44,54 @@ StoreSchema.statics._create = function(
 		location,
 		phoneNumber,
 		orderable,
+		image,
 	})
 	return store.save()
 }
 
 // 상점 조건(park, name, cate)으로 찾기
-StoreSchema.statics._findByOptions = function(options) {
-	return this.find(options)
-		.populate('owner')
-		.populate({ path: 'park', select: 'name' })
-		.populate('category')
-		.exec()
+// StoreSchema.statics._findByOptions = function(options) {
+// 	return this.find(options)
+// 		.populate('owner')
+// 		.populate({ path: 'park', select: 'name' })
+// 		.populate('category')
+// 		.exec()
+// }
+StoreSchema.statics._findByOptions = async function(options) {
+	let config = [
+		{
+			$lookup: {
+				from: 'reviews',
+				localField: '_id',
+				foreignField: 'store',
+				as: 'scores',
+			},
+		},
+		{ $unwind: { path: '$scores', preserveNullAndEmptyArrays: true } },
+		{
+			$group: {
+				_id: '$_id',
+				name: { $first: '$name' },
+				owner: { $first: '$owner' },
+				park: { $first: '$park' },
+				category: { $first: '$category' },
+				location: { $first: '$location' },
+				phoneNumber: { $first: '$phoneNumber' },
+				orderable: { $first: '$orderable' },
+				image: { $first: '$image' },
+				avg: { $avg: '$scores.score' },
+			},
+		},
+		{ $sort: { _id: 1 } },
+	]
+	if (Object.keys(options).length > 0) {
+		config.unshift({ $match: options })
+	}
+	let result = await this.aggregate(config)
+	result = await this.populate(result, { path: 'owner' })
+	result = await this.populate(result, { path: 'park' })
+	result = await this.populate(result, { path: 'category' })
+	return result
 }
 
 // 상점 인덱스로 상점 찾기
@@ -61,6 +100,7 @@ StoreSchema.statics._findByStoreId = function(_id) {
 		.populate('owner')
 		.populate({ path: 'park', select: 'name' })
 		.populate('category')
+		.lean()
 		.exec()
 }
 
