@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTag, faMapMarkerAlt, faPhoneSquare } from '@fortawesome/free-solid-svg-icons'
 import auth from 'utils/auth'
 import MenuList from './MenuList'
+import StoreMap from './StoreMap'
 import styles from './SearchDetail.scss'
 
 const SearchDetail = ({ store, menuList, toggle }) => (
 	<Fragment>
-		{/* 지도 */}
+		<StoreMap />
 		<Card>
 			<CardHeader className="bg-light">
 				<h3 className="font-weight-bold card-title mb-4 text-primary">{store.name}</h3>
