@@ -35,3 +35,4 @@ export const ownerOrderList = ({ storeId }) =>
 	axios.get('/api/owner/' + storeId + '/orderList', auth.authHeader())
 export const finishOrder = ({ orderId }) =>
 	axios.post('/api/owner/finishOrder', { orderId }, auth.authHeader())
+export const getMenuList = key => axios.get(`/api/store/${key}/menuList`, auth.authHeader())

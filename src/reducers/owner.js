@@ -14,6 +14,7 @@ const GET_OWNERORDERLIST = 'owner/GET_OWNERORDERLIST'
 const FINISH_ORDER = 'owner/FINISH_ORDER'
 const CHANGE_INPUT = 'owner/CHANGE_INPUT'
 
+const GET_MENULIST = 'owner/GET_MENULIST'
 // ACTION CREATORS
 export const getStoreList = createAction(GET_STORELIST, api.ownerStoreList)
 export const toggleAddStoreModal = createAction(TOGGLE_ADD_STORE_MODAL)
@@ -25,6 +26,7 @@ export const getOwnerOrderList = createAction(GET_OWNERORDERLIST, api.ownerOrder
 export const finishOrder = createAction(FINISH_ORDER, api.finishOrder)
 export const changeInput = createAction(CHANGE_INPUT)
 
+export const getMenuList = createAction(GET_MENULIST, api.getMenuList)
 // STATE INITIALIZE
 const initialState = Record({
 	storeList: List(),
@@ -37,6 +39,7 @@ const initialState = Record({
 	selectedStoreKey: '',
 	orderList: List(),
 	orderStore: null,
+	selectedStoreMenu: List(),
 })()
 const OrderRecord = Record({
 	_id: '',
@@ -97,6 +100,13 @@ export default handleActions(
 			},
 		}),
 		[CHANGE_INPUT]: (state, action) => state.setIn(['postCodeModal', 'input'], action.payload),
+		...pender({
+			type: GET_MENULIST,
+			onSuccess: (state, { payload: { data: data } }) => {
+				const { menus } = data
+				return state.set('selectedStoreMenu', List(menus))
+			},
+		}),
 	},
 	initialState
 )

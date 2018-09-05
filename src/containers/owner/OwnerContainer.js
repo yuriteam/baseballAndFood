@@ -43,14 +43,19 @@ class OwnerContainer extends Component {
 		togglePostCodeModal()
 	}
 
-	toggleMenuMgmtModal = key => {
-		const { toggleMenuMgmtModal } = this.props
-		toggleMenuMgmtModal(key)
+	toggleMenuMgmtModal = async key => {
+		const { toggleMenuMgmtModal, getMenuList } = this.props
+		try {
+			if (key) await getMenuList(key)
+			toggleMenuMgmtModal(key)
+		} catch (e) {
+			const { message } = e.response.data
+			return { [FORM_ERROR]: message }
+		}
 	}
 
 	async componentDidMount() {
 		const { getStoreList } = this.props
-
 		try {
 			await getStoreList()
 		} catch (e) {
@@ -74,8 +79,8 @@ class OwnerContainer extends Component {
 			postCodeModal,
 			menuMgmtModal,
 			changeInput,
+			selectedStoreMenu,
 		} = this.props
-
 		return (
 			<Fragment>
 				<AddStoreButton toggle={toggleAddStoreModal} />
@@ -109,6 +114,7 @@ class OwnerContainer extends Component {
 								props.form.reset()
 								toggleMenuMgmtModal()
 							}}
+							selectedStoreMenu={selectedStoreMenu}
 						/>
 					)}
 				/>
@@ -126,6 +132,7 @@ export default connect(
 		postCodeModal: owner.postCodeModal,
 		menuMgmtModal: owner.menuMgmtModal,
 		selectedStoreKey: owner.selectedStoreKey,
+		selectedStoreMenu: owner.selectedStoreMenu,
 	}),
 	dispatch => bindActionCreators(ownerActions, dispatch)
 )(OwnerContainer)

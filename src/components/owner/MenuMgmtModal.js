@@ -9,26 +9,24 @@ import {
 	Label,
 	Col,
 	Form,
-	ListGroup,
-	ListGroupItem,
-	ListGroupItemHeading,
-	ListGroupItemText,
 } from 'reactstrap'
 import { Field } from 'react-final-form'
+import MenuList from './MenuList'
 
 export default class MenuMgmtModal extends Component {
 	render() {
-		const { isOpen, toggle, handleSubmit, submitting } = this.props
+		const { isOpen, toggle, handleSubmit, submitting, selectedStoreMenu } = this.props
 		const { reset } = this.props.form
 		return (
-			<Modal isOpen={isOpen} toggle={toggle}>
-				<ModalHeader toggle={toggle}>메뉴 관리</ModalHeader>
+			<Modal isOpen={isOpen} toggle={() => toggle('')}>
+				<ModalHeader toggle={() => toggle('')}>메뉴 관리</ModalHeader>
 				<Form
 					onSubmit={event => {
 						handleSubmit(event).then(reset)
 					}}
 				>
 					<ModalBody>
+						<MenuList menus={selectedStoreMenu} />
 						<FormGroup row>
 							<Label for="name" sm={2}>
 								이름
@@ -62,7 +60,7 @@ export default class MenuMgmtModal extends Component {
 						<Button color="primary" type="submit" disabled={submitting}>
 							추가
 						</Button>
-						<Button color="secondary" onClick={toggle}>
+						<Button color="secondary" onClick={() => toggle('')} type="button">
 							취소
 						</Button>
 					</ModalFooter>
