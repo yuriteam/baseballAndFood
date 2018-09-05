@@ -1,11 +1,27 @@
+/*global daum*/
+
 import React, { Component } from 'react'
 
 export default class StoreMap extends Component {
+	shouldComponentUpdate(nextProps, nextState) {
+		return JSON.stringify(nextProps) != JSON.stringify(this.props)
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		this.renderMap()
+		console.log('update')
+	}
+
 	componentDidMount() {
-		// 지도 생성
+		this.renderMap()
+	}
+
+	renderMap() {
+		var { location } = this.props
+		var coordinates = location.loc.coordinates
 		var container = document.getElementById('map')
 		var options = {
-			center: new daum.maps.LatLng(33.450701, 126.570667),
+			center: new daum.maps.LatLng(coordinates[1], coordinates[0]),
 			level: 3,
 		}
 		var map = new daum.maps.Map(container, options)
@@ -17,7 +33,7 @@ export default class StoreMap extends Component {
 		map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT)
 
 		//마커 생성
-		var markerPosition = new daum.maps.LatLng(33.450701, 126.570667)
+		var markerPosition = new daum.maps.LatLng(coordinates[1], coordinates[0])
 		var marker = new daum.maps.Marker({
 			position: markerPosition,
 		})

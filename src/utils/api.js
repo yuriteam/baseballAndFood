@@ -41,3 +41,4 @@ export const upload = ({ formData }) => {
 	config.headers['content-type'] = 'multipart/form-data'
 	return axios.post('/api/upload', formData, config)
 }
+export const getMenuList = key => axios.get(`/api/store/${key}/menuList`, auth.authHeader())

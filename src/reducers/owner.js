@@ -15,6 +15,7 @@ const FINISH_ORDER = 'owner/FINISH_ORDER'
 const CHANGE_INPUT = 'owner/CHANGE_INPUT'
 const CHANGE_FILE_INPUT = 'owner/CHANGE_FILE_INPUT'
 
+const GET_MENULIST = 'owner/GET_MENULIST'
 // ACTION CREATORS
 export const getStoreList = createAction(GET_STORELIST, api.ownerStoreList)
 export const toggleAddStoreModal = createAction(TOGGLE_ADD_STORE_MODAL)
@@ -27,6 +28,7 @@ export const finishOrder = createAction(FINISH_ORDER, api.finishOrder)
 export const changeInput = createAction(CHANGE_INPUT)
 export const changeFileInput = createAction(CHANGE_FILE_INPUT)
 
+export const getMenuList = createAction(GET_MENULIST, api.getMenuList)
 // STATE INITIALIZE
 const initialState = Record({
 	storeList: List(),
@@ -41,6 +43,7 @@ const initialState = Record({
 	orderList: List(),
 	orderStore: null,
 	imageFile: null,
+	selectedStoreMenu: List(),
 })()
 const OrderRecord = Record({
 	_id: '',
@@ -116,6 +119,13 @@ export default handleActions(
 		}),
 		[CHANGE_INPUT]: (state, action) => state.setIn(['postCodeModal', 'input'], action.payload),
 		[CHANGE_FILE_INPUT]: (state, action) => state.set('imageFile', action.payload),
+		...pender({
+			type: GET_MENULIST,
+			onSuccess: (state, { payload: { data: data } }) => {
+				const { menus } = data
+				return state.set('selectedStoreMenu', List(menus))
+			},
+		}),
 	},
 	initialState
 )
