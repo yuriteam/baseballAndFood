@@ -27,6 +27,7 @@ OrderSchema.statics._findByStoreId = function(store) {
 	return this.find({ store })
 		.populate('store')
 		.populate('menus')
+		.sort('finish ordered')
 		.exec()
 }
 
@@ -43,6 +44,7 @@ OrderSchema.statics._findByUserId = function(user) {
 	return this.find({ user })
 		.populate('store')
 		.populate('menus')
+		.sort('finish ordered')
 		.exec()
 }
 

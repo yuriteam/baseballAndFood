@@ -71,24 +71,32 @@ class SearchDetailContainer extends Component {
 				) : (
 					<main className="container py-3">
 						{store && (
-							<SearchDetail store={store} menuList={menuList} toggle={toggleModal} />
-						)}
-						<ReviewList reviewList={reviewList} />
-						{store && (
-							<Form
-								onSubmit={onReviewSubmit}
-								initialValues={{ store: store._id }}
-								render={props => (
-									<ReviewForm
-										{...props}
-										isOpen={reviewModal}
-										toggle={() => {
-											props.form.reset()
-											toggleModal()
-										}}
-									/>
+							<Fragment>
+								<SearchDetail
+									store={store}
+									menuList={menuList}
+									toggle={toggleModal}
+								/>
+								{store.orderable && (
+									<Fragment>
+										<ReviewList reviewList={reviewList} />
+										<Form
+											onSubmit={onReviewSubmit}
+											initialValues={{ store: store._id }}
+											render={props => (
+												<ReviewForm
+													{...props}
+													isOpen={reviewModal}
+													toggle={() => {
+														props.form.reset()
+														toggleModal()
+													}}
+												/>
+											)}
+										/>
+									</Fragment>
 								)}
-							/>
+							</Fragment>
 						)}
 					</main>
 				)}

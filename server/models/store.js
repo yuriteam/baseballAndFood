@@ -86,7 +86,7 @@ StoreSchema.statics._findByOptions = async function(options) {
 				avg: { $avg: '$scores.score' },
 			},
 		},
-		{ $sort: { _id: 1 } },
+		{ $sort: { avg: -1 } },
 	]
 	if (Object.keys(options).length > 0) {
 		config.unshift({ $match: options })

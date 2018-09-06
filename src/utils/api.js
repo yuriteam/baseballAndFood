@@ -16,7 +16,7 @@ export const myOrderList = () => axios.get('/api/auth/order', auth.authHeader())
 export const parkList = () => axios.get('/api/store/parkList')
 export const cateList = () => axios.get('/api/store/cateList')
 export const storeList = values => axios.get('/api/store/search?' + queryString.stringify(values))
-export const storeDetail = ({ storeId }) => axios.get('/api/store/' + storeId)
+export const storeDetail = ({ storeId }) => axios.get('/api/store/' + storeId, auth.authHeader())
 export const insertReview = ({ store, content, score }) =>
 	axios.post('/api/store/review', { store, content, score }, auth.authHeader())
 export const addOrder = ({ store, menus }) =>

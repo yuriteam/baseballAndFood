@@ -58,6 +58,14 @@ exports.detail = asyncHandler(async (req, res, next) => {
 	let avg = await Review._avgByStoreId(storeId)
 	store.avg = avg.length > 0 ? avg[0].avg : 0
 
+	// 주문 이력 여부
+	if (req.user) {
+		let count = await Order.count({ store: storeId, user: req.user._id }).exec()
+		store.reviewable = count > 0
+	} else {
+		store.reviewable = false
+	}
+
 	let menus = await Menu._findByStoreId(storeId)
 	let reviews = await Review._findByStoreId(storeId)
 
