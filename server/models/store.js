@@ -14,6 +14,7 @@ const StoreSchema = new Schema({
 		},
 	},
 	phoneNumber: String,
+	destination: String,
 	orderable: { type: Boolean, default: false },
 	image: String,
 })
@@ -33,6 +34,7 @@ StoreSchema.statics._create = function(
 	category,
 	location,
 	phoneNumber,
+	destination,
 	orderable,
 	image
 ) {
@@ -43,6 +45,7 @@ StoreSchema.statics._create = function(
 		category,
 		location,
 		phoneNumber,
+		destination,
 		orderable,
 		image,
 	})
@@ -77,6 +80,7 @@ StoreSchema.statics._findByOptions = async function(options) {
 				category: { $first: '$category' },
 				location: { $first: '$location' },
 				phoneNumber: { $first: '$phoneNumber' },
+				destination: { $first: '$destination' },
 				orderable: { $first: '$orderable' },
 				image: { $first: '$image' },
 				avg: { $avg: '$scores.score' },

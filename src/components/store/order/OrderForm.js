@@ -1,6 +1,6 @@
 import React from 'react'
 import { Field } from 'react-final-form'
-import { Alert, Form, Media, FormGroup, Col, Button } from 'reactstrap'
+import { Alert, Form, Media, FormGroup, Col, Button, CustomInput } from 'reactstrap'
 import styles from './OrderForm.scss'
 
 const OrderForm = props => {
@@ -19,20 +19,36 @@ const OrderForm = props => {
 					<Col key={'menu_' + menu._id} xs="12" md="6" lg="4" className="mb-3">
 						<Media className="align-items-center">
 							<Media left>
-								<Media
-									object
-									src="https://placeholdit.imgix.net/~text?txt=100%C3%97100&w=100&h=100"
-									className="img-thumbnail"
+								<img
+									src={
+										menu.image === ''
+											? 'https://placeholdit.imgix.net/~text?txtsize=20&txt=100%C3%97100&w=100&h=100'
+											: '/upload/' + menu.image
+									}
+									className={[
+										'img-thumbnail media-object',
+										styles.mediaImage,
+									].join(' ')}
 								/>
 							</Media>
 							<Media body className={['ml-3', styles.mediaText].join(' ')}>
-								{menu.name}
 								<Field
 									name="menus"
-									component="input"
 									type="checkbox"
+									component="input"
 									value={menu._id}
-								/>
+								>
+									{({ input }) => (
+										<CustomInput
+											{...input}
+											value={menu._id}
+											type="checkbox"
+											label={menu.name}
+											id={'orderable_' + menu._id}
+											inline
+										/>
+									)}
+								</Field>
 							</Media>
 						</Media>
 					</Col>

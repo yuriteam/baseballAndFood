@@ -8,12 +8,14 @@ const GET_STORELIST = 'store/GET_STORELIST'
 const GET_STOREDETAIL = 'store/GET_STOREDETAIL'
 const TOGGLE_REVIEW_MODAL = 'store/TOGGLE_REVIEW_MODAL'
 const INSERT_REVIEW = 'store/INSERT_REVIEW'
+const CHANGE_LOADING = 'store/CHANGE_LOADING'
 
 // ACTION CREATORS
 export const getStoreList = createAction(GET_STORELIST, api.storeList)
 export const getStoreDetail = createAction(GET_STOREDETAIL, api.storeDetail)
 export const toggleReviewModal = createAction(TOGGLE_REVIEW_MODAL)
 export const insertReview = createAction(INSERT_REVIEW, api.insertReview)
+export const changeLoading = createAction(CHANGE_LOADING)
 
 // STATE INITIALIZE
 const initialState = Record({
@@ -24,6 +26,7 @@ const initialState = Record({
 		reviewList: List(),
 		reviewModal: false,
 	})(),
+	loading: true,
 })()
 
 // REDUCER
@@ -57,6 +60,7 @@ export default handleActions(
 				)
 			},
 		}),
+		[CHANGE_LOADING]: (state, action) => state.set('loading', action.payload),
 	},
 	initialState
 )

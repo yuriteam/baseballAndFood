@@ -11,17 +11,19 @@ const ParkSchema = new Schema({
 			coordinates: { type: [Number], index: '2dsphere' },
 		},
 	},
+	image: String,
 })
 
 /**
  * static, method
  */
 // 야구장 등록
-ParkSchema.statics._create = function(name, homeTeam, location) {
+ParkSchema.statics._create = function(name, homeTeam, location, image) {
 	const park = new this({
 		name,
 		homeTeam,
 		location,
+		image,
 	})
 	return park.save()
 }

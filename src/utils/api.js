@@ -23,10 +23,19 @@ export const addOrder = ({ store, menus }) =>
 	axios.post('/api/store/order', { store, menus }, auth.authHeader())
 
 export const ownerStoreList = () => axios.get('/api/owner/storeList', auth.authHeader())
-export const addStore = ({ name, park, category, location, phoneNumber, orderable, image }) =>
+export const addStore = ({
+	name,
+	park,
+	category,
+	location,
+	phoneNumber,
+	destination,
+	orderable,
+	image,
+}) =>
 	axios.post(
 		'/api/owner/addStore',
-		{ name, park, category, location, phoneNumber, orderable, image },
+		{ name, park, category, location, phoneNumber, destination, orderable, image },
 		auth.authHeader()
 	)
 export const addMenu = ({ store, name, price }) =>

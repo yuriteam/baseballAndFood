@@ -19,11 +19,12 @@ exports.storeList = asyncHandler(async (req, res, next) => {
  * @param {String} category
  * @param {String} location
  * @param {String} phoneNumber
+ * @param {String} destination
  * @param {Boolean} orderable
  * @param {String} image
  */
 exports.addStore = asyncHandler(async (req, res, next) => {
-	let { name, park, category, location, phoneNumber, orderable, image } = req.body
+	let { name, park, category, location, phoneNumber, destination, orderable, image } = req.body
 	const owner = req.user._id
 	orderable = orderable === 'Y'
 
@@ -47,6 +48,7 @@ exports.addStore = asyncHandler(async (req, res, next) => {
 		category,
 		location,
 		phoneNumber,
+		destination,
 		orderable,
 		image
 	)

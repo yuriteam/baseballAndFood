@@ -28,8 +28,8 @@ class Ballpark extends Component {
 							{park.location.name}
 						</CardSubtitle>
 						<img
-							className="img-fluid mx-auto my-3"
-							src="https://ballparkbiz.files.wordpress.com/2014/07/hanwha-eagles-logo.gif?w=360"
+							className={['mx-auto my-3', styles.img].join(' ')}
+							src={'/upload/' + park.image}
 							width="150"
 						/>
 						<CardText className="text-primary">{this.renderHomeTeam()}</CardText>

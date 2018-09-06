@@ -20,7 +20,7 @@ class StoreMap extends Component {
 		var container = document.getElementById('map')
 		var options = {
 			center: new daum.maps.LatLng(coordinates[1], coordinates[0]),
-			level: 1,
+			level: 2,
 		}
 		var map = new daum.maps.Map(container, options)
 

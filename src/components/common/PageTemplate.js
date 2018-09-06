@@ -7,7 +7,7 @@ const PageTemplate = ({ children }) => (
 	<Fragment>
 		<BaseContainer />
 		<Header />
-		{children}
+		<section id="main">{children}</section>
 		<Footer />
 	</Fragment>
 )

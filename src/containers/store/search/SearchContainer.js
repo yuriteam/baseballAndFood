@@ -5,38 +5,42 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'reducers/store'
 import queryString from 'query-string'
 import { Form } from 'react-final-form'
+import Loading from 'components/store/search/Loading'
 import SearchForm from 'components/store/search/SearchForm'
 import SearchResultList from 'components/store/search/SearchResultList'
 
 class SearchContainer extends Component {
 	onSubmit = async values => {
-		const { history, getStoreList } = this.props
+		const { history, changeLoading, getStoreList } = this.props
+		changeLoading(true)
 		try {
 			history.push('/search/?' + queryString.stringify(values))
 			await getStoreList(values)
 		} catch (e) {
 			console.log(e)
 		}
+		changeLoading(false)
 	}
 
 	async componentDidMount() {
-		const { location, getStoreList } = this.props
+		const { location, changeLoading, getStoreList } = this.props
 		const query = queryString.parse(location.search)
-
+		changeLoading(true)
 		try {
 			await getStoreList(query)
 		} catch (e) {
 			console.log(e)
 		}
+		changeLoading(false)
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return nextProps.storeList !== this.props.storeList
-	}
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	return nextProps.storeList !== this.props.storeList
+	// }
 
 	render() {
 		const { onSubmit } = this
-		const { location, parkList, cateList, storeList } = this.props
+		const { loading, location, parkList, cateList, storeList } = this.props
 		const query = queryString.parse(location.search)
 
 		return (
@@ -49,7 +53,7 @@ class SearchContainer extends Component {
 						<SearchForm {...props} parkList={parkList} cateList={cateList} />
 					)}
 				/>
-				<SearchResultList storeList={storeList} />
+				{loading ? <Loading /> : <SearchResultList storeList={storeList} />}
 			</Fragment>
 		)
 	}
@@ -57,6 +61,7 @@ class SearchContainer extends Component {
 
 export default connect(
 	({ base, store }) => ({
+		loading: store.loading,
 		parkList: base.parkList,
 		cateList: base.cateList,
 		storeList: store.storeList,

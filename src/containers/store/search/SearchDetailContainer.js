@@ -6,6 +6,7 @@ import * as storeActions from 'reducers/store'
 import queryString from 'query-string'
 import { Form } from 'react-final-form'
 import { FORM_ERROR } from 'final-form'
+import Loading from 'components/store/search/Loading'
 import SearchForm from 'components/store/search/SearchForm'
 import SearchDetail from 'components/store/search/SearchDetail'
 import ReviewList from 'components/store/review/ReviewList'
@@ -35,13 +36,14 @@ class SearchDetailContainer extends Component {
 	}
 
 	async componentDidMount() {
-		const { match, getStoreDetail } = this.props
-
+		const { match, changeLoading, getStoreDetail } = this.props
+		changeLoading(true)
 		try {
 			await getStoreDetail(match.params)
 		} catch (e) {
 			console.log(e)
 		}
+		changeLoading(false)
 	}
 
 	// shouldComponentUpdate(nextProps, nextState) {
@@ -50,7 +52,7 @@ class SearchDetailContainer extends Component {
 
 	render() {
 		const { onSearchSubmit, onReviewSubmit, toggleModal } = this
-		const { storeDetail, cateList, parkList } = this.props
+		const { loading, storeDetail, cateList, parkList } = this.props
 		const { store, menuList, reviewList, reviewModal } = storeDetail
 		const query = store != null ? { park: store.park._id } : null
 
@@ -64,28 +66,32 @@ class SearchDetailContainer extends Component {
 						<SearchForm {...props} parkList={parkList} cateList={cateList} />
 					)}
 				/>
-				<main className="container py-3">
-					{store && (
-						<SearchDetail store={store} menuList={menuList} toggle={toggleModal} />
-					)}
-					<ReviewList reviewList={reviewList} />
-					{store && (
-						<Form
-							onSubmit={onReviewSubmit}
-							initialValues={{ store: store._id }}
-							render={props => (
-								<ReviewForm
-									{...props}
-									isOpen={reviewModal}
-									toggle={() => {
-										props.form.reset()
-										toggleModal()
-									}}
-								/>
-							)}
-						/>
-					)}
-				</main>
+				{loading ? (
+					<Loading />
+				) : (
+					<main className="container py-3">
+						{store && (
+							<SearchDetail store={store} menuList={menuList} toggle={toggleModal} />
+						)}
+						<ReviewList reviewList={reviewList} />
+						{store && (
+							<Form
+								onSubmit={onReviewSubmit}
+								initialValues={{ store: store._id }}
+								render={props => (
+									<ReviewForm
+										{...props}
+										isOpen={reviewModal}
+										toggle={() => {
+											props.form.reset()
+											toggleModal()
+										}}
+									/>
+								)}
+							/>
+						)}
+					</main>
+				)}
 			</Fragment>
 		)
 	}
@@ -93,6 +99,7 @@ class SearchDetailContainer extends Component {
 
 export default connect(
 	({ base, store }) => ({
+		loading: store.loading,
 		parkList: base.parkList,
 		cateList: base.cateList,
 		storeDetail: store.storeDetail,

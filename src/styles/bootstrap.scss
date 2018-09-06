@@ -12,3 +12,21 @@ $font-family-sans-serif: 'NanumSquareRound', -apple-system, BlinkMacSystemFont, 
 
 // import
 @import '~bootstrap/scss/bootstrap';
+
+#root {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	height: 100vh; /* Use height insted of min-height for IE 10/11. */
+}
+
+section#main {
+	-ms-flex-negative: 0;
+	flex-shrink: 0;
+	margin-top: 56px;
+}
+
+footer {
+	margin-top: auto;
+}

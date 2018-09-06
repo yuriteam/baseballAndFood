@@ -5,6 +5,7 @@ const MenuSchema = new Schema({
 	store: { type: Schema.Types.ObjectId, ref: 'store' },
 	name: String,
 	price: { type: Number, default: 0 },
+	image: { type: String, default: '' },
 })
 
 MenuSchema.index({ store: 1 })

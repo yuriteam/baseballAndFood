@@ -12,10 +12,10 @@ class Header extends Component {
 		const isLogged = auth.getToken() !== null
 		const isOwner = isLogged && auth.getUserInfo().isOwner
 		return (
-			<nav className="navbar navbar-dark bg-primary static-top">
+			<nav className="navbar navbar-dark bg-primary fixed-top">
 				<div className="container">
 					<Link className="navbar-brand font-weight-bold" to="/">
-						Baseball & Food
+						배불리
 					</Link>
 					{!isLogged && (
 						<Link className="btn btn-primary" to="/login">

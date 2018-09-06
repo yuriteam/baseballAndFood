@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 const Footer = () => (
-	<footer className="footer bg-dark text-light py-md-5 py-4">
+	<footer className="footer bg-dark text-light py-lg-5 py-4">
 		<div className="container">
 			<div className="row">
 				<div className="col-lg-6 h-100 text-center text-lg-left my-auto">
@@ -22,7 +22,7 @@ const Footer = () => (
 						</li>
 					</ul>
 					<p className="text-muted small mb-4 mb-lg-0">
-						&copy; Baseball & Food 2018. All Rights Reserved.
+						&copy; 배불리 2018. All Rights Reserved.
 					</p>
 				</div>
 				<div className="col-lg-6 h-100 text-center text-lg-right my-auto">

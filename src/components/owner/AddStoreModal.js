@@ -114,6 +114,19 @@ const AddStoreModal = props => {
 						</Col>
 					</FormGroup>
 					<FormGroup row>
+						<Label for="destination" sm="2">
+							배달위치
+						</Label>
+						<Col sm="10">
+							<Field
+								name="destination"
+								component="input"
+								placeholder="배달위치"
+								className="form-control"
+							/>
+						</Col>
+					</FormGroup>
+					<FormGroup row>
 						<Label for="orderable" sm="2">
 							배달가능여부
 						</Label>

@@ -22,7 +22,7 @@ const SearchForm = props => {
 								</Col>
 								<Col xs="3" md="2" className="mb-md-0 mb-2">
 									<Field name="cate" component="select" className="custom-select">
-										<option value="">선택</option>
+										<option value="">업종선택</option>
 										{cateList.map((cate, i) => (
 											<option key={'cate_' + cate._id} value={cate._id}>
 												{cate.name}
